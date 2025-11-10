@@ -4,5 +4,4 @@ $Route = new Routes();
 
 $Route->GET("/" , "MainController@index");
 
-
 $Route->JalankanRouting();
