@@ -6,9 +6,11 @@ services:
     image: php:8.2-fpm
     container_name: php-app
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     networks:
       - app-network
+    env_file:
+      - .env
     depends_on:
       - db
 
@@ -22,6 +24,8 @@ services:
       - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
+    env_file:
+      - .env
     networks:
       - app-network
 
@@ -29,11 +33,10 @@ services:
     image: mysql:8.0
     container_name: mysql-db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: paw
+    env_file:
+      - .env
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
