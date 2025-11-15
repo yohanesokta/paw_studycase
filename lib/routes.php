@@ -1,5 +1,7 @@
 <?php
+require "lib/controllers.php";
 require "controllers/main_controller.php";
+require "controllers/google_controller.php";
 
 function clearUrl($path)
 {
