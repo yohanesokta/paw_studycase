@@ -4,4 +4,8 @@ $Route = new Routes();
 
 $Route->GET("/" , "MainController@index");
 
+
+$Route->GET("/auth/google","GoogleController@redirect");
+$Route->GET("/auth/google/callback","GoogleController@callback");
+
 $Route->JalankanRouting();
