@@ -68,5 +68,6 @@ class GoogleController extends Controllers
         curl_close($curl);
         $user = json_decode($userinfo, true);
         var_dump($user);
+        var_dump($_SERVER);
     }
 }
