@@ -6,7 +6,8 @@ class authController extends Controllers
     {
         $data = [
             "client_id" => $_ENV['google_client_id'],
-            "redirect_uri" => "http://localhost/paw_studycase/google/callback",
+            // contoh redirect url -> disisi http://localhost/paw_studycase/google/callback
+            "redirect_uri" => $_ENV['rederict_url'],
             "response_type" => "code",
             "scope" => "openid email profile",
             "prompt" => "consent"
