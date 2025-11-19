@@ -1,4 +1,5 @@
 <?php
+require_once "models/user_models.php";
 
 class authController extends Controllers
 {
@@ -6,12 +7,12 @@ class authController extends Controllers
     {
         $data = [
             "client_id" => $_ENV['google_client_id'],
-            // contoh redirect url -> disisi http://localhost/paw_studycase/google/callback
-            "redirect_uri" => $_ENV['rederict_url'],
+            "redirect_uri" => "http://localhost/paw_studycase/google/callback",
             "response_type" => "code",
             "scope" => "openid email profile",
             "prompt" => "consent"
         ];
+
         $url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query($data);
         header("Location: $url");
         exit();
@@ -19,10 +20,14 @@ class authController extends Controllers
 
     public function callback()
     {
-        $token_url = "https://oauth2.googleapis.com/token";
-        $userinfo_url = "https://www.googleapis.com/oauth2/v3/userinfo";
+        session_start();
+        require "config/koneksi.php";
 
-        $curl = curl_init($token_url);
+        $userModel = new UserModel($conn);
+
+        // ---------- Ambil TOKEN ----------
+        $curl = curl_init("https://oauth2.googleapis.com/token");
+
         $data = [
             "client_id" => $_ENV['google_client_id'],
             "client_secret" => $_ENV["google_client_secret"],
@@ -30,30 +35,88 @@ class authController extends Controllers
             "grant_type" => "authorization_code",
             "redirect_uri" => "http://localhost/paw_studycase/google/callback"
         ];
+
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        if (!$_ENV['production']) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        }
-        $response = curl_exec($curl);
+
+        $token_response = curl_exec($curl);
         curl_close($curl);
-        $token = json_decode($response, true);
+
+        $token = json_decode($token_response, true);
 
 
-        $curl = curl_init($userinfo_url);
+        // ---------- Ambil DATA USER ----------
+        $curl = curl_init("https://www.googleapis.com/oauth2/v3/userinfo");
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             "Authorization: Bearer " . $token["access_token"]
         ]);
-        if (!$_ENV['production']) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
         $userinfo = curl_exec($curl);
         curl_close($curl);
+
         $user = json_decode($userinfo, true);
-        var_dump($user);
+
+        // ---------- Data Google ----------
+        $google_id = $user["sub"];
+        $nama      = $user["name"];
+        $foto      = $user["picture"];
+
+        // ---------- Cek User di DB ----------
+        $userData = $userModel->findById($google_id);
+
+        if (!$userData) {
+            // user baru → insert
+            $userModel->createUser($google_id, $nama);
+
+            // ambil ulang data user
+            $userData = $userModel->findById($google_id);
+        }
+
+        // ---------- Simpan ke Session ----------
+        $_SESSION['userdata'] = [
+            "id"      => $userData["id"],
+            "profile" => $foto,
+            "nama"    => $userData["nama"]
+        ];
+
+        // ---------- Jika data belum lengkap ----------
+        if (empty($userData["no_telepon"]) || empty($userData["alamat"])) {
+            header("Location: /paw_studycase/google/user-profile");
+            exit();
+        }
+
+        // ---------- Jika lengkap → dashboard ----------
+        header("Location: /paw_studycase/dashboard");
+        exit();
+    }
+
+    public function userProfile()
+    {
+        $this->view("user-profile");
+    }
+
+    public function userProfileSave()
+    {
+        session_start();
+        require "config/koneksi.php";
+
+        $userModel = new UserModel($conn);
+
+        $id = $_SESSION['userdata']['id'];
+        $no_telepon = $_POST['no_telepon'];
+        $alamat = $_POST['alamat'];
+
+        // update via model
+        $userModel->updateProfile($id, $no_telepon, $alamat);
+
+        // update session
+        $_SESSION['userdata']['no_telepon'] = $no_telepon;
+        $_SESSION['userdata']['alamat'] = $alamat;
+
+        header("Location: /paw_studycase/dashboard");
+        exit();
     }
 }
