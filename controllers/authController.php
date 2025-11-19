@@ -25,7 +25,7 @@ class authController extends Controllers
 
         $userModel = new UserModel($conn);
 
-        // ---------- Ambil TOKEN ----------
+        // ambil token
         $curl = curl_init("https://oauth2.googleapis.com/token");
 
         $data = [
@@ -46,7 +46,7 @@ class authController extends Controllers
         $token = json_decode($token_response, true);
 
 
-        // ---------- Ambil DATA USER ----------
+        // ambil data user
         $curl = curl_init("https://www.googleapis.com/oauth2/v3/userinfo");
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -59,43 +59,42 @@ class authController extends Controllers
 
         $user = json_decode($userinfo, true);
 
-        // ---------- Data Google ----------
+        // data google
         $google_id = $user["sub"];
         $nama      = $user["name"];
         $foto      = $user["picture"];
 
-        // ---------- Cek User di DB ----------
+        // cek user di db
         $userData = $userModel->findById($google_id);
 
         if (!$userData) {
-            // user baru → insert
+            // user baru, dan insert
             $userModel->createUser($google_id, $nama);
 
             // ambil ulang data user
             $userData = $userModel->findById($google_id);
         }
 
-        // ---------- Simpan ke Session ----------
+        // simpan ke session
         $_SESSION['userdata'] = [
             "id"      => $userData["id"],
             "profile" => $foto,
             "nama"    => $userData["nama"]
         ];
 
-        // ---------- Jika data belum lengkap ----------
+        // jika data belum lengkap
         if (empty($userData["no_telepon"]) || empty($userData["alamat"])) {
             header("Location: /paw_studycase/google/user-profile");
             exit();
         }
 
-        // ---------- Jika lengkap → dashboard ----------
         header("Location: /paw_studycase/dashboard");
         exit();
     }
 
     public function userProfile()
     {
-        $this->view("user-profile");
+        $this->view("auth/user-profile");
     }
 
     public function userProfileSave()
@@ -109,10 +108,9 @@ class authController extends Controllers
         $no_telepon = $_POST['no_telepon'];
         $alamat = $_POST['alamat'];
 
-        // update via model
+    
         $userModel->updateProfile($id, $no_telepon, $alamat);
 
-        // update session
         $_SESSION['userdata']['no_telepon'] = $no_telepon;
         $_SESSION['userdata']['alamat'] = $alamat;
 
