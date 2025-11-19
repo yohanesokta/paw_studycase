@@ -4,7 +4,7 @@ function URL($url) {
 }
 function Redirect($url) {
     header("Location: ".URL($url));
-    exit;
+    exit();
 }
 
 

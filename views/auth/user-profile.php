@@ -88,7 +88,7 @@
         <div class="form-container mx-auto">
             <h2>Lengkapi Data Anda</h2>
 
-            <form action="/paw_studycase/google/user-profile/save" method="POST">
+            <form action="<?= URL("/google/user-profile/save") ?>" method="POST">
 
                 <div class="mb-3">
                     <label for="no_telepon" class="form-label">Nomor Telepon</label>

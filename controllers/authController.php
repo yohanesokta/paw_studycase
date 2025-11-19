@@ -90,10 +90,10 @@ class authController extends Controllers
         // jika data belum lengkap
         if (empty($userData["no_telepon"]) || empty($userData["alamat"])) {
             header("Location: /paw_studycase/google/user-profile");
-            exit();
+            Redirect("/google/user-profile");
         }
 
-        header("Location: /paw_studycase/dashboard");
+        Redirect("/paw_studycase/dashboard");
         exit();
     }
 
@@ -119,7 +119,7 @@ class authController extends Controllers
         $_SESSION['userdata']['no_telepon'] = $no_telepon;
         $_SESSION['userdata']['alamat'] = $alamat;
 
-        header("Location: /paw_studycase/dashboard");
-        exit();
+        Redirect("/paw_studycase/dashboard");
+
     }
 }
