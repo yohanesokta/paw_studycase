@@ -33,7 +33,7 @@ class authController extends Controllers
             "client_secret" => $_ENV["google_client_secret"],
             "code" => $_GET['code'],
             "grant_type" => "authorization_code",
-            "redirect_uri" => "http://localhost/paw_studycase/google/callback"
+            "redirect_uri" => $_ENV['rederict_url']
         ];
 
         curl_setopt($curl, CURLOPT_POST, true);
