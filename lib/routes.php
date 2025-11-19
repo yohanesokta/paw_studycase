@@ -11,6 +11,10 @@ function clearUrl($path)
     return $path;
 }
 
+function URL($url) {
+    return "/".$_ENV['proyekname']."/".$url;
+}
+
 class Routes
 {
     private $route = [];

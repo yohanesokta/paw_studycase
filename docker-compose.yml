@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   app:
-    image: php:8.2-fpm
+    build: .
     container_name: php-app
     volumes:
       - ./:/var/www/html
