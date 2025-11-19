@@ -8,7 +8,7 @@ class Middleware
     }
 
     private function users(array $userdata) {
-        if ($userdata['role'] != "user") {
+        if ($userdata['role'] != "pelanggan") {
             return Redirect("/");
         }
     }
@@ -21,7 +21,7 @@ class Middleware
                 case 'admin':
                     $this->admin($_SESSION['userdata']);
                     break;
-                case "user" :
+                case "pelanggan" :
                     $this->users($_SESSION["userdata"]);
                     break;
             }

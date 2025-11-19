@@ -629,7 +629,7 @@
                         <a class="nav-link" href="#kontak">Kontak</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-login btn-sm" href="<?php echo "/".$_ENV["proyekname"];?>/google">Login</a>
+                        <a class="btn btn-login btn-sm" href="<?=URL("/google")?>?>">Login</a>
                     </li>
                 </ul>
             </div>
@@ -827,7 +827,7 @@
                             <li>Detergent standar</li>
                             <li>Gratis softener</li>
                         </ul>
-                        <a href="<?php echo "/".$_ENV["proyekname"];?>/google" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
+                        <a href="<?=URL("/google") ?>?>" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
                     </div>
                 </div>
 

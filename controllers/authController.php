@@ -7,7 +7,7 @@ class authController extends Controllers
     {
         $data = [
             "client_id" => $_ENV['google_client_id'],
-            "redirect_uri" => "https://paw.gajahweb.tech/callback",
+            "redirect_uri" => $_ENV['rederict_url'],
             "response_type" => "code",
             "scope" => "openid email profile",
             "prompt" => "consent"
@@ -39,6 +39,8 @@ class authController extends Controllers
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
         $token_response = curl_exec($curl);
         curl_close($curl);
@@ -53,6 +55,8 @@ class authController extends Controllers
             "Authorization: Bearer " . $token["access_token"]
         ]);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
         $userinfo = curl_exec($curl);
         curl_close($curl);
@@ -63,13 +67,14 @@ class authController extends Controllers
         $google_id = $user["sub"];
         $nama      = $user["name"];
         $foto      = $user["picture"];
+        $email     = $user["email"];
 
         // cek user di db
         $userData = $userModel->findById($google_id);
 
         if (!$userData) {
             // user baru, dan insert
-            $userModel->createUser($google_id, $nama);
+            $userModel->createUser($google_id, $nama,$email,$foto);
 
             // ambil ulang data user
             $userData = $userModel->findById($google_id);

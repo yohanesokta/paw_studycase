@@ -17,13 +17,15 @@ class UserModel
         return mysqli_fetch_assoc($result);
     }
 
-    public function createUser($id, $nama)
+    public function createUser($id, $nama,$email,$foto)
     {
         $id = mysqli_real_escape_string($this->conn, $id);
         $nama = mysqli_real_escape_string($this->conn, $nama);
+        $email = mysqli_real_escape_string($this->conn, $email);
 
-        $sql = "INSERT INTO user (id, nama, role)
-                VALUES ('$id', '$nama', 'pelanggan')";
+
+        $sql = "INSERT INTO user (id, nama, email, profile, role)
+                VALUES ('$id', '$nama', '$email', '$foto', 'pelanggan')";
         return mysqli_query($this->conn, $sql);
     }
 
