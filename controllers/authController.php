@@ -21,9 +21,8 @@ class authController extends Controllers
     public function callback()
     {
         session_start();
-        require "config/koneksi.php";
 
-        $userModel = new UserModel($conn);
+        $userModel = new UserModel($GLOBALS['connection']);
 
         // ambil token
         $curl = curl_init("https://oauth2.googleapis.com/token");
@@ -84,7 +83,8 @@ class authController extends Controllers
         $_SESSION['userdata'] = [
             "id"      => $userData["id"],
             "profile" => $foto,
-            "nama"    => $userData["nama"]
+            "nama"    => $userData["nama"],
+            "role" => $userData["role"],
         ];
 
         // jika data belum lengkap

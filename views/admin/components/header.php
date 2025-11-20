@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<?php require 'sidebar.php'; ?>
+<?php require 'sidebar.php';?>
 
 <div class="main-content">
     <nav class="navbar navbar-light bg-white rounded shadow-sm mb-4 p-3">
@@ -20,8 +20,8 @@
                 <?= isset($title) ? $title : 'Dashboard' ?>
             </span>
             <div class="d-flex align-items-center">
-                <span class="me-3 text-muted small">Halo, Admin</span>
-                <img src="<?= $_SESSION['userdata']['profile'] ?> ?>" class="rounded-circle border" alt="Profile">
+                <span class="me-3 text-muted small">Halo, Admin <?=  $_SESSION['userdata']['nama']?></span>
+                <img src="<?= $_SESSION['userdata']['profile'] ?>" class="rounded-circle border" onerror="this.onerror=null; this.src='../public/blank-profile.webp';" width="30">
             </div>
         </div>
     </nav>
