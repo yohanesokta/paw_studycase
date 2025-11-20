@@ -6,5 +6,6 @@ $Route->GET("/", "MainController@index");
 
 $Route->GET("/google", "authController@login");
 $Route->GET("/google/callback", "authController@callback");
+$Route->GET("/user/dashboard", "userController@index");
 
 $Route->JalankanRouting();

@@ -675,4 +675,55 @@
     100% { transform: translateX(-100%); }
 }
 
-/* Home */
+/* Dashboard User*/
+.dashboard-nav {
+            background: #6a5af9;
+            padding: 12px 0;
+        }
+
+        .dashboard-nav .nav-link,
+        .dashboard-nav .navbar-brand {
+            color: #fff !important;
+            font-weight: 600;
+        }
+
+        .dashboard-hero {
+            background: linear-gradient(135deg, #6a5af9, #836fff);
+            padding: 60px 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .transaction-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .transaction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .transaction-status {
+            font-size: 14px;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .status-proses {
+            background: #ffd66b;
+        }
+
+        .status-selesai {
+            background: #73e47b;
+            color: #fff;
+        }
+
+        .status-diambil {
+            background: #4da3ff;
+            color: #fff;
+        }
