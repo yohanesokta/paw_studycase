@@ -26,7 +26,7 @@
     </div>
 
     <div class="mt-auto p-3">
-        <a href="logout.php" class="btn btn-danger w-100 btn-sm">
+        <a href="<?= URL("/logout") ?>?>" class="btn btn-danger w-100 btn-sm">
             <i class="bi bi-box-arrow-left"></i> Logout
         </a>
     </div>

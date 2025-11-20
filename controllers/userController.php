@@ -1,5 +1,4 @@
 <?php
-require "config/koneksi.php";
 require_once "models/pesanan_models.php";
 
 class userController extends Controllers
@@ -9,8 +8,7 @@ class userController extends Controllers
 
     public function __construct()
     {
-        require "config/koneksi.php";
-        $this->conn = $conn;
+        $this->conn = $GLOBALS['connection'];
     }
 
     public function index()
