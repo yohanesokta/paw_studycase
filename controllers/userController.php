@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "config/koneksi.php";
 require_once "models/pesanan_models.php";
 
