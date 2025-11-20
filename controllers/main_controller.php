@@ -1,6 +1,6 @@
 <?php
 class MainController extends Controllers {
     public function index() {
-        $this->view("main");
+        $this->view("home");
     }
 }

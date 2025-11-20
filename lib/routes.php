@@ -19,14 +19,14 @@ class Routes
     {
         $this->request_url =  parse_url($_SERVER['REQUEST_URI']);
     }
-    public function GET($url, $controller)
+    public function GET($url, $controller, $middleware = null) 
     {
-        $this->route[] = ["URL" =>  $url, "Controller"  => $controller, "Method" =>  "GET"];
+        $this->route[] = ["URL" =>  $url, "Controller"  => $controller, "Method" =>  "GET" , "Middleware"=> $middleware];
     }
 
-    public function POST($url, $controller)
+    public function POST($url, $controller, $middleware = null)
     {
-        $this->route[] = ["URL" =>  $url, "Controller"  => $controller, "Method" =>  "POST"];
+        $this->route[] = ["URL" =>  $url, "Controller"  => $controller, "Method" =>  "POST", "Middleware"=> $middleware];
     }
 
     public function JalankanRouting()
@@ -39,6 +39,10 @@ class Routes
                 if (class_exists($className)) {
                     $controller = new $className;
                     if (method_exists($controller, $methodName)) {
+                        if ($route['Middleware']) {
+                            $middleware_controller = new Middleware();
+                            $middleware_controller->handle($route['Middleware']);
+                        }
                         $controller->$methodName();
                         return;
                     }
