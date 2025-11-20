@@ -14,6 +14,7 @@ $Route->GET("/admin/pesanan","adminController@pesanan");
 $Route->GET("/admin/harga","adminController@harga");
 $Route->GET("/admin/pelanggan","adminController@pelanggan");
 $Route->GET("/admin/laporan","adminController@laporan");
+$Route->GET("/admin/logout","adminController@logout");
 
 
 $Route->JalankanRouting();
