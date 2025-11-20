@@ -1,7 +1,17 @@
 <?php
+require "models/admin_models.php";
+
 
 class adminController extends Controllers {
+    private $adminModels;
+  
+    public function __construct()
+    {
+       $this->adminModels = new AdminModels();
+
+    }
     public function dashboard() {
+        $data = $this->adminModels->getPesananAll();
         $this->view('admin/dashboard');
     }
     public function pesanan() {
