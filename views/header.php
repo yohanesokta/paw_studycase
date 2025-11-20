@@ -6,7 +6,7 @@
     <title>Fresh Laundry - Service Laundry Terpercaya</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./public/css/home.css"
+    <link rel="stylesheet" href="./public/css/home.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -35,10 +35,10 @@
                         <a class="nav-link" href="#kontak">Kontak</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-login-admin btn-sm" href="/<?php echo $_ENV["proyekname"];?>/login-admin">Admin</a>
+                        <a class="btn btn-login-admin btn-sm" href="<?= URL('/login-admin') ?>">Admin</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-login btn-sm" href="/<?php echo $_ENV["proyekname"];?>/google">Login</a>
+                        <a class="btn btn-login btn-sm" href="<?= URL('/google') ?>">Login</a>
                     </li>
                 </ul>
             </div>
