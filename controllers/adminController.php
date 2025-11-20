@@ -11,11 +11,12 @@ class adminController extends Controllers {
 
     }
     public function dashboard() {
-        $data = $this->adminModels->getPesananAll();
         $this->view('admin/dashboard');
     }
     public function pesanan() {
-        $this->view('admin/pesanan');
+        $data = $this->adminModels->getPesananAll();
+
+        $this->view('admin/pesanan',['data'=> $data]);
     }
     public function harga() {
         $this->view('admin/harga');

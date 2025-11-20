@@ -21,7 +21,7 @@
             </span>
             <div class="d-flex align-items-center">
                 <span class="me-3 text-muted small">Halo, Admin</span>
-                <img src="https://via.placeholder.com/40" class="rounded-circle border" alt="Profile">
+                <img src="<?= $_SESSION['userdata']['profile'] ?> ?>" class="rounded-circle border" alt="Profile">
             </div>
         </div>
     </nav>

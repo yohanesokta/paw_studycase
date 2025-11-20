@@ -29,22 +29,28 @@ require 'views/admin/components/header.php';
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if (count($data) > 0) { 
+                        var_dump($data);
+                            foreach ($data as $value) {
+                        ?>
                     <tr>
-                        <td class="fw-bold">#ORD-2023001</td>
+                        <td class="fw-bold"><?= $value['id_pesanan'] ?> </td>
                         <td>
-                            <div class="fw-semibold">Budi Santoso</div>
-                            <small class="text-muted">0812-3456-7890</small>
+                            <div class="fw-semibold"><?= $value['nama_user'] ?></div>
+                            <small class="text-muted"><?= $value['no_telepon'] ?></small>
                         </td>
-                        <td>Cuci Basah</td>
+                        <td><?= $value['nama_cucian'] ?></td>
                         <td>
+                            <?php if ($value['berat']) { echo $value['berat']." kg"; } else { ?>
                             <form action="proses/update_berat.php" method="POST" class="d-flex align-items-center gap-2">
                                 <input type="hidden" name="id_pesanan" value="1">
-                                <input type="number" step="0.1" class="form-control form-control-sm text-center" style="width: 70px;" value="3.5">
+                                <input type="number" step="0.1" class="form-control form-control-sm text-center" style="width: 70px;">
                                 <button type="submit" class="btn btn-sm btn-outline-success" title="Simpan Berat"><i class="bi bi-check-lg"></i></button>
                             </form>
+                           <?php }?>
                         </td>
-                        <td><span class="badge bg-warning text-dark rounded-pill">Pending</span></td>
-                        <td><span class="badge bg-danger rounded-pill">Belum Dibayar</span></td>
+                        <td><span class="badge bg-warning text-dark rounded-pill"><?= $value['status'] ?></span></td>
+                        <td><span class="badge bg-danger rounded-pill"><?=  ($value['harga']) ? "Rp ".$value['harga'] : ""  ?></span></td>
                         <td>
                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateStatus" onclick="setModalData(1, 'pending', 'belum_dibayar')">
                                 <i class="bi bi-pencil-square"></i> Update
@@ -54,6 +60,9 @@ require 'views/admin/components/header.php';
                             </a>
                         </td>
                     </tr>
+
+                    <?php } 
+                } ?>
                     </tbody>
             </table>
         </div>
