@@ -35,9 +35,6 @@
                         <a class="nav-link" href="#kontak">Kontak</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-login-admin btn-sm" href="<?= URL('/login-admin') ?>">Admin</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="btn btn-login btn-sm" href="<?= URL('/google') ?>">Login</a>
                     </li>
                 </ul>

@@ -12,7 +12,9 @@ $Route->POST("/google/user-profile/save", "authController@userProfileSave");
 
 
 // $Route->GET("/admin","MainController@index","user"); contoh penggunaan middleware
-$Route->GET("/user/dashboard", "userController@index");
+$Route->GET("/user/dashboard", "userController@index", "user");
+$Route->POST("/user/pesanan", "userController@pesanan", "user");
+
 $Route->GET("/admin/dashboard","adminController@dashboard");
 $Route->GET("/admin/pesanan","adminController@pesanan");
 $Route->GET("/admin/harga","adminController@harga");
