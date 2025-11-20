@@ -119,7 +119,22 @@ class authController extends Controllers
         $_SESSION['userdata']['no_telepon'] = $no_telepon;
         $_SESSION['userdata']['alamat'] = $alamat;
 
-        Redirect("/paw_studycase/dashboard");
+        Redirect("/cek");
 
+    }
+
+    public function logout()
+    {
+        session_start();
+
+        session_unset();
+        session_destroy();
+
+        Redirect("/");
+    }
+
+    public function cek()
+    {
+        $this->view("cek");
     }
 }
