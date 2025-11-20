@@ -16,4 +16,7 @@ class adminController extends Controllers {
      public function laporan() {
         $this->view('admin/laporan');
     }
+     public function logout() {
+        $this->view('admin/logout');
+    }
 }
