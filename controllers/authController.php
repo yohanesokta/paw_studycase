@@ -84,8 +84,6 @@ class authController extends Controllers
             "nama"    => $userData["nama"],
 
             "role" => $userData["role"],
-
-            "role"    => $userData['role']
         ];
 
         // jika data belum lengkap
@@ -110,9 +108,8 @@ class authController extends Controllers
     public function userProfileSave()
     {
         session_start();
-        require "config/koneksi.php";
 
-        $userModel = new UserModel($conn);
+        $userModel = new UserModel($GLOBALS['connection']);
 
         $id = $_SESSION['userdata']['id'];
         $no_telepon = $_POST['no_telepon'];
