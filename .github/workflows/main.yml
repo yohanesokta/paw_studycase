@@ -1,0 +1,33 @@
+name: Deployment Workflow
+on:
+  push: 
+    branches: ['main']  
+      
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${SSH_PRIVATE_KEY}" > ~/sshkey
+          chmod 600 ~/sshkey
+          echo "${SSH_KNOWN_HOSTS}" > ~/.ssh/known_hosts
+          
+
+      - name: Run deployment commands
+        run: |
+          ssh -i ~/sshkey ubuntu@vps.gajahweb.tech "
+            echo 'Koneksi berhasil!'
+            cd apps/paw_studycase
+            git pull
+            docker compose down
+            docker compose up -d
+          "
