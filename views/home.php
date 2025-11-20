@@ -190,7 +190,7 @@ include 'header.php';
                             <li>Detergent standar</li>
                             <li>Gratis softener</li>
                         </ul>
-                        <a href="/<?php echo $_ENV["proyekname"];?>/google" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
+                        <a href="<?= URL('/google') ?>" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
                     </div>
                 </div>
 
