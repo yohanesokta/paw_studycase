@@ -49,6 +49,6 @@ class Routes
                 }
             }
         }
-        echo "404 Not Found!";
+        require "views/404.php";
     }
 }
