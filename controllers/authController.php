@@ -24,7 +24,6 @@ class authController extends Controllers
 
         $userModel = new UserModel($GLOBALS['connection']);
 
-        // ambil token
         $curl = curl_init("https://oauth2.googleapis.com/token");
 
         $data = [
@@ -47,7 +46,6 @@ class authController extends Controllers
         $token = json_decode($token_response, true);
 
 
-        // ambil data user
         $curl = curl_init("https://www.googleapis.com/oauth2/v3/userinfo");
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -73,7 +71,7 @@ class authController extends Controllers
 
         if (!$userData) {
             // user baru, dan insert
-            $userModel->createUser($google_id, $nama,$email,$foto);
+            $userModel->createUser($google_id, $nama, $email, $foto);
 
             // ambil ulang data user
             $userData = $userModel->findById($google_id);
@@ -84,17 +82,24 @@ class authController extends Controllers
             "id"      => $userData["id"],
             "profile" => $foto,
             "nama"    => $userData["nama"],
+
             "role" => $userData["role"],
+
+            "role"    => $userData['role']
         ];
 
         // jika data belum lengkap
         if (empty($userData["no_telepon"]) || empty($userData["alamat"])) {
-            header("Location: /paw_studycase/google/user-profile");
             Redirect("/google/user-profile");
         }
 
-        Redirect("/paw_studycase/dashboard");
-        exit();
+        if ($userData["role"] == "admin") {
+            Redirect("/admin/dashboard");
+            exit();
+        } else {
+            Redirect("/user/dashboard");
+            exit();
+        }
     }
 
     public function userProfile()
@@ -113,14 +118,13 @@ class authController extends Controllers
         $no_telepon = $_POST['no_telepon'];
         $alamat = $_POST['alamat'];
 
-    
+
         $userModel->updateProfile($id, $no_telepon, $alamat);
 
         $_SESSION['userdata']['no_telepon'] = $no_telepon;
         $_SESSION['userdata']['alamat'] = $alamat;
 
-        Redirect("/cek");
-
+        Redirect("/user/dashboard");
     }
 
     public function logout()
