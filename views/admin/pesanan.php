@@ -17,45 +17,56 @@ require 'views/admin/components/header.php';
             <table class="table table-hover align-middle">
                 <thead>
                     <tr>
-                        <th>ID Pesanan</th>
+                        <th>ID</th>
+                        <th>Tanggal</th>
                         <th>Pelanggan</th>
                         <th>Jenis Layanan</th>
                         <th>Berat (Kg)</th>
                         <th>Status Order</th>
-                        <th>Pembayaran</th>
+                        <th>Total</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (count($data) > 0) { 
+                    <?php 
+                    if (count($data) > 0) { 
                             foreach ($data as $value) {
                         ?>
                     <tr>
                         <td class="fw-bold"><?= $value['id_pesanan'] ?> </td>
+                        <td class="fw-bold"><?= $value['tanggal'] ?> </td>
+
                         <td>
                             <div class="fw-semibold"><?= $value['nama_user'] ?></div>
                             <small class="text-muted"><?= $value['no_telepon'] ?></small>
                         </td>
                         <td><?= $value['nama_cucian'] ?></td>
                         <td>
-                            <?php if ($value['berat']) { echo $value['berat']." kg"; } else { ?>
-                            <form action="proses/update_berat.php" method="POST" class="d-flex align-items-center gap-2">
-                                <input type="hidden" name="id_pesanan" value="1">
-                                <input type="number" step="0.1" class="form-control form-control-sm text-center" style="width: 70px;" value="0.0">
+                            <?php if ($value['verifed']) { echo $value['berat']." kg"; } else { ?>
+                            <form action="<?= URL("/admin/pesanan") ?>" method="POST" class="d-flex align-items-center gap-2">
+                                <input type="hidden" name="id_pesanan" value="<?= $value['id_pesanan'] ?>">
+                                <input type="number" name="berat" step="0.1" class="form-control form-control-sm text-center" style="width: 70px;" value="<?= $value['berat'] ?? 0 ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-success" title="Simpan Berat"><i class="bi bi-check-lg"></i></button>
                             </form>
                            <?php }?>
                         </td>
+                        <?php if ($value['verifed'])  {?>
                         <td><span class="badge bg-warning text-dark rounded-pill"><?= $value['status'] ?></span></td>
-                        <td><span class="badge bg-danger rounded-pill"><?=  ($value['harga']) ? "Rp ".$value['harga'] : ""  ?></span></td>
+                        <?php } else { ?>
+                        <td><span class="badge bg-warning text-dark rounded-pill">Unverifed</span></td>
+
+                        <?php } ?>
+                        <?php if ($value['verifed'])  {?>
                         <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateStatus" onclick="setModalData(1, 'pending', 'belum_dibayar')">
+                            <span class="badge <?= ($value['verifed'] == 1) ? "bg-danger" : "bg-success"?> rounded-pill"><?=  ($value['harga']) ? "Rp ".$value['harga'] : ""  ?></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateStatus" onclick="setModalData(<?= $value['id_pesanan'] ?>, 'pending', 'belum_dibayar')">
                                 <i class="bi bi-pencil-square"></i> Update
                             </button>
-                            <a href="cetak_nota.php?id=1" class="btn btn-sm btn-outline-secondary" target="_blank">
-                                <i class="bi bi-printer"></i>
-                            </a>
+                            
                         </td>
+                        <?php } else { echo "<td></td><td></td><td></td>";} ?>
                     </tr>
 
                     <?php } 
@@ -74,7 +85,7 @@ require 'views/admin/components/header.php';
                 <h6 class="modal-title fw-bold">Update Status Pesanan</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="proses/update_status.php" method="POST">
+            <form action="<?= URL("/admin/pesanan/update") ?>" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="id_pesanan" id="edit_id">
                     
@@ -90,8 +101,8 @@ require 'views/admin/components/header.php';
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-muted">STATUS PEMBAYARAN</label>
                         <select name="status_bayar" class="form-select form-select-sm">
-                            <option value="belum_dibayar" class="text-danger">Belum Dibayar</option>
-                            <option value="dibayar" class="text-success fw-bold">Lunas (Dibayar)</option>
+                            <option value="1" class="text-danger">Belum Dibayar</option>
+                            <option value="2" class="text-success fw-bold">Lunas (Dibayar)</option>
                         </select>
                     </div>
                 </div>

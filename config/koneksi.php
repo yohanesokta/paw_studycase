@@ -11,8 +11,6 @@ try {
     die("500 Internal Server Errror <br><br>" . $e->getMessage());
 }
 
-
-
 class DatabaseConnection{ 
     private static $instance = null;
     public static function getConnection() {
