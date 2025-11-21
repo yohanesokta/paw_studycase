@@ -62,3 +62,6 @@ CREATE TABLE `report` (
         FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi`(`id`)
         ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+
+`verifed` tinyint(1) NOT NULL DEFAULT 0,

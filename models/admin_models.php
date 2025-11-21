@@ -7,14 +7,16 @@ class AdminModels
     {
         $this->db = DatabaseConnection::getConnection();
     }
-    public function getPesananAll()
+    public function getPesanan($id = null)
     {
+        $SELECT = ($id) ? " WHERE p.id='$id';" : ";";
         $SQL = "SELECT 
                 p.id AS id_pesanan,
                 p.tanggal,
                 p.berat,
                 p.harga,
                 p.status,
+                p.verifed,
 
                 u.id AS id_user,
                 u.nama AS nama_user,
@@ -29,10 +31,32 @@ class AdminModels
 
                 FROM pesanan p
                 JOIN user u ON p.id_user = u.id
-                JOIN cucian c ON p.id_cucian = c.id;
-                ";
+                JOIN cucian c ON p.id_cucian = c.id". $SELECT;
         $result = $this->db->query($SQL);
         $result = $result->fetch_all(MYSQLI_ASSOC);
         return $result;
+    }
+
+    public function updateBerat($id, $berat) {
+        try {
+            $harga = $this->getPesanan($id);
+            $harga = (int) floatval($harga[0]["harga_perkg"]) * $berat;
+            $SQL = "UPDATE pesanan SET berat=?, harga=?, verifed='1' WHERE id=?";
+            $SQL = $this->db->prepare($SQL);
+            $SQL->bind_param("iii" ,$berat,$harga,$id);
+            $SQL->execute();
+        } catch (Exception $e) { 
+            die($e->getMessage());
+        }
+    }
+    public function updatePesanan( $id, $status_order, $status_bayar) {
+        try {
+        $SQL = "UPDATE pesanan SET status=?, verifed=? WHERE id=?";
+        $SQL = $this->db->prepare($SQL);
+        $SQL->bind_param("sii", $status_order,$status_bayar,$id);
+        $SQL->execute();
+        }  catch (Exception $e) { 
+            die($e->getMessage());
+        }
     }
 }
