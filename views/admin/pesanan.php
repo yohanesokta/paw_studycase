@@ -58,7 +58,7 @@ require 'views/admin/components/header.php';
                         <?php } ?>
                         <?php if ($value['verifed'])  {?>
                         <td>
-                            <span class="badge <?= ($value['verifed'] == 1) ? "bg-danger" : "bg-success"?> rounded-pill"><?=  ($value['harga']) ? "Rp ".$value['harga'] : ""  ?></span>
+                            <span class="badge <?= ($value['verifed'] == 1) ? "bg-danger" : "bg-success"?> rounded-pill"><?=  ($value['harga']) ? "Rp ".number_format($value['harga'], 0, ',', '.') : ""  ?></span>
                         </td>
                         <td>
                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateStatus" onclick="setModalData(<?= $value['id_pesanan'] ?>, 'pending', 'belum_dibayar')">
