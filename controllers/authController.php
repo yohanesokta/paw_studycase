@@ -82,6 +82,8 @@ class authController extends Controllers
             "id"      => $userData["id"],
             "profile" => $foto,
             "nama"    => $userData["nama"],
+            "alamat" => $userData['alamat'],
+            "no_telepon" => $userData['no_telepon'],
 
             "role" => $userData["role"],
         ];

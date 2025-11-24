@@ -105,13 +105,13 @@
 
                         <div class="mb-3">
                             <small class="text-white-50">Nama Pemesan</small>
-                            <h5 class="fw-bold">Agus Susanto</h5>
+                            <h5 class="fw-bold"><?= $_SESSION['userdata']['nama']; ?></h5>
                         </div>
 
                         <div class="mb-3">
                             <small class="text-white-50">Alamat & Kontak</small>
-                            <p class="mb-0">Jl. Telang Indah No. 12, Kamal</p>
-                            <p class="mb-0"><i class="fas fa-phone-alt me-1"></i> 0812-3456-7890</p>
+                            <p class="mb-0"><?= $_SESSION['userdata']['alamat']; ?></p>
+                            <p class="mb-0"><i class="fas fa-phone-alt me-1"></i><?= $_SESSION['userdata']['no_telepon']; ?></p>
                         </div>
 
                         <div class="row mt-4">
