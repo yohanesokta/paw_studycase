@@ -2,7 +2,7 @@
 $HOST = $_ENV['MYSQL_HOST'] ?? "localhost";
 $USERNAME = $_ENV["MYSQL_DB_USER"] ?? "root";
 $PASSWORD = $_ENV["MYSQL_ROOT_PASSWORD"] ?? "";
-$DATABASE = $_ENV["MYSQL_DATABASE"] ?? "";
+$DATABASE = $_ENV["MYSQL_DATABASE"] ?? "mysql_database";
 
 try {
     $conn =  mysqli_connect($HOST, $USERNAME, $PASSWORD, $DATABASE);
