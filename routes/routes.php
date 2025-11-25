@@ -29,6 +29,8 @@ $Route->POST("/user/pesanan", "userController@pesanan", "pelanggan");
 $Route->GET("/logout","authController@logout");
 $Route->GET("/cek","authController@cek");
 
+$Route->GET("/master_harga","authController@master_harga");
+
 
 
 $Route->JalankanRouting();

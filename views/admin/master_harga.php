@@ -6,19 +6,6 @@ require 'views/admin/components/header.php';
 
 <div class="container-fluid">
 
-    <?php if (isset($_SESSION['success_message'])): ?>
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '<?= $_SESSION['success_message']; ?>',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        </script>
-        <?php unset($_SESSION['success_message']); ?>
-    <?php endif; ?>
-
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card table-card">
