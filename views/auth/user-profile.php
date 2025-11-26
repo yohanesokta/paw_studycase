@@ -5,105 +5,105 @@
     <meta charset="UTF-8">
     <title>Lengkapi Data - Fresh Laundry</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, #6A73E5 0%, #5D6FE5 40%, #536DFE 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .profile-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            max-width: 550px;
+            margin: auto;
         }
 
-        .navbar-brand {
-            font-size: 24px;
+        .logo-title {
+            font-size: 30px;
             font-weight: 700;
-            color: white !important;
+            color: #0d6efd;
         }
 
-        .nav-link {
-            color: white !important;
+        .subtitle {
+            font-size: 15px;
+            color: #555;
         }
 
-        .form-container {
-            max-width: 600px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-top: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        label {
+            font-weight: 600;
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: #333;
+        .form-control,
+        textarea {
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 16px;
         }
 
         .btn-primary {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: 600;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 18px;
+            background: #0d6efd;
             border: none;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
+            background: #0056d6;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 23px;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-droplet"></i> Fresh Laundry
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#mengapa">Mengapa Kami</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#harga">Harga</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Form Section -->
     <div class="container">
-        <div class="form-container mx-auto">
-            <h2>Lengkapi Data Anda</h2>
+        <div class="profile-card">
 
-            <form action="<?= URL("/google/user-profile/save") ?>" method="POST">
+            <!-- Logo & Title -->
+            <h3 class="text-center mb-3 logo-title">
+                <i class="fas fa-droplet me-2"></i> Fresh Laundry
+            </h3>
+            <p class="text-center subtitle">Lengkapi data Anda terlebih dahulu</p>
+
+            <form action="<?= URL('/google/user-profile/save') ?>" method="POST">
 
                 <div class="mb-3">
-                    <label for="no_telepon" class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control" name="no_telepon" id="no_telepon"
-                        placeholder="Masukkan nomor telepon" required>
+                    <label for="no_telepon">Nomor Telepon</label>
+                    <input type="text" id="no_telepon" name="no_telepon"
+                        class="form-control" placeholder="Masukkan nomor telepon Anda" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="alamat" class="form-label">Alamat Lengkap</label>
-                    <textarea class="form-control" name="alamat" id="alamat" rows="4"
-                        placeholder="Masukkan alamat lengkap" required></textarea>
+                    <label for="alamat">Alamat Lengkap</label>
+                    <textarea id="alamat" name="alamat" rows="4"
+                        class="form-control" placeholder="Masukkan alamat lengkap Anda" required></textarea>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Simpan</button>
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-save me-2"></i> Simpan
+                </button>
             </form>
+
         </div>
     </div>
 
