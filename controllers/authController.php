@@ -67,14 +67,14 @@ class authController extends Controllers
         $email     = $user["email"];
 
         // cek user di db
-        $userData = $userModel->findById($google_id);
+        $userData = $userModel->findByGoogleId($google_id);
 
         if (!$userData) {
             // user baru, dan insert
-            $userModel->createUser($google_id, $nama, $email, $foto);
+            $userModel->createUserGoogle($google_id, $nama, $email, $foto);
 
             // ambil ulang data user
-            $userData = $userModel->findById($google_id);
+            $userData = $userModel->findByGoogleId($google_id);
         }
 
         // simpan ke session
@@ -136,8 +136,77 @@ class authController extends Controllers
         Redirect("/");
     }
 
-    public function cek()
+    public function loginManual()
     {
-        $this->view("cek");
+        $this->view("auth/login");
+    }
+
+
+    public function loginProcess()
+    {
+        session_start();
+        $userModel = new UserModel($GLOBALS['connection']);
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $user = $userModel->loginManual($email, $password);
+
+        if (!$user) {
+            $_SESSION['error'] = "Email atau password salah!";
+            Redirect("/auth/login");
+            exit();
+        }
+
+        // Simpan session
+        $_SESSION['userdata'] = [
+            "id" => $user['id'],
+            "nama" => $user['nama'],
+            "alamat" => $user['alamat'],
+            "no_telepon" => $user['no_telepon'],
+            "role" => $user['role'],
+        ];
+
+        // Cek kelengkapan data
+        if (empty($user['no_telepon']) || empty($user['alamat'])) {
+            Redirect("/google/user-profile");
+            return;
+        }
+
+        if ($user['role'] === 'admin') {
+            Redirect("/admin/dashboard");
+        } else {
+            Redirect("/user/dashboard");
+        }
+    }
+
+    public function register()
+    {
+        $this->view("auth/register");
+    }
+
+    public function registerProcess()
+    {
+        session_start();
+        $userModel = new UserModel($GLOBALS['connection']);
+
+        $nama = $_POST['nama'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $no_telepon = $_POST['no_telepon'];
+        $alamat = $_POST['alamat'];
+
+        // Cek apakah email sudah dipakai
+        if ($userModel->findByEmail($email)) {
+            $_SESSION['error'] = "Email sudah terdaftar!";
+            Redirect("/auth/register");
+            return;
+        }
+
+        // Buat user
+        $userModel->registerManual($nama, $email, $password, $no_telepon, $alamat);
+
+        $_SESSION['success_message'] = "Pendaftaran berhasil, silakan login!";
+        Redirect("/auth/login");
     }
 }
