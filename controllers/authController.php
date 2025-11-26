@@ -79,14 +79,15 @@ class authController extends Controllers
 
         // simpan ke session
         $_SESSION['userdata'] = [
-            "id"      => $userData["id"],
+            "id"      => $userData["id"],          
+            "google_id" => $userData["google_id"], 
             "profile" => $foto,
             "nama"    => $userData["nama"],
             "alamat" => $userData['alamat'],
             "no_telepon" => $userData['no_telepon'],
-
-            "role" => $userData["role"],
+            "role" => $userData["role"]
         ];
+
 
         // jika data belum lengkap
         if (empty($userData["no_telepon"]) || empty($userData["alamat"])) {
@@ -113,7 +114,7 @@ class authController extends Controllers
 
         $userModel = new UserModel($GLOBALS['connection']);
 
-        $id = $_SESSION['userdata']['id'];
+        $id = $_SESSION['userdata']['google_id'];
         $no_telepon = $_POST['no_telepon'];
         $alamat = $_POST['alamat'];
 
@@ -206,7 +207,6 @@ class authController extends Controllers
         // Buat user
         $userModel->registerManual($nama, $email, $password, $no_telepon, $alamat);
 
-        $_SESSION['success_message'] = "Pendaftaran berhasil, silakan login!";
         Redirect("/auth/login");
     }
 }

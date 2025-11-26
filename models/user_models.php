@@ -9,24 +9,22 @@ class UserModel
         $this->conn = $db;
     }
 
-    public function findByGoogleId($googleId)
+    public function findByGoogleId($google_id)
     {
-        $googleId = mysqli_real_escape_string($this->conn, $googleId);
-        $sql = "SELECT * FROM user WHERE google_id = '$googleId'";
+        $google_id = mysqli_real_escape_string($this->conn, $google_id);
+        $sql = "SELECT * FROM user WHERE google_id = '$google_id'";
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_assoc($result);
     }
 
-
-    public function createUserGoogle($googleId, $nama, $email, $foto)
+    public function createUserGoogle($google_id, $nama, $email, $foto)
     {
-        $googleId = mysqli_real_escape_string($this->conn, $googleId);
+        $google_id = mysqli_real_escape_string($this->conn, $google_id);
         $nama = mysqli_real_escape_string($this->conn, $nama);
         $email = mysqli_real_escape_string($this->conn, $email);
-        $foto = mysqli_real_escape_string($this->conn, $foto);
 
         $sql = "INSERT INTO user (google_id, nama, email, profile, role)
-            VALUES ('$googleId', '$nama', '$email', '$foto', 'pelanggan')";
+            VALUES ('$google_id', '$nama', '$email', '$foto', 'pelanggan')";
 
         return mysqli_query($this->conn, $sql);
     }
@@ -38,11 +36,14 @@ class UserModel
         $telp = mysqli_real_escape_string($this->conn, $telp);
         $alamat = mysqli_real_escape_string($this->conn, $alamat);
 
-        $sql = "UPDATE user SET no_telepon='$telp', alamat='$alamat'
-                WHERE google_id='$google_id'";
+        $sql = "UPDATE user 
+            SET no_telepon='$telp', alamat='$alamat'
+            WHERE google_id=$google_id";
 
         return mysqli_query($this->conn, $sql);
     }
+
+
 
     public function findByEmail($email)
     {
@@ -71,7 +72,7 @@ class UserModel
         $user = $this->findByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
-            return $user; // login berhasil
+            return $user;
         }
 
         return false;

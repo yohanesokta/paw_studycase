@@ -64,7 +64,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
 
-                <div class="register-card">
+                <div class="register-card mt-5 mb-5">
 
                     <h3 class="text-center mb-3 logo-title">
                         <i class="fas fa-droplet me-2"></i> Fresh Laundry
