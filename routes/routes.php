@@ -4,11 +4,17 @@ $Route = new Routes();
 
 $Route->GET("/", "MainController@index");
 
-// routing autentikasi
+// routing autentikasi google
 $Route->GET("/google", "authController@login");
 $Route->GET("/google/callback", "authController@callback");
 $Route->GET("/google/user-profile", "authController@userProfile");
 $Route->POST("/google/user-profile/save", "authController@userProfileSave");
+
+// routing autentikasi manual
+$Route->GET('/auth/login', 'authController@loginManual');
+$Route->POST('/auth/login/process', 'authController@loginProcess');
+$Route->GET('/auth/register', 'authController@register');
+$Route->POST('/auth/register/process', 'authController@registerProcess');
 
 
 // $Route->GET("/admin","MainController@index","user"); contoh penggunaan middleware
