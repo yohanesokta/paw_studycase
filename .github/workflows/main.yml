@@ -23,11 +23,12 @@ jobs:
           
 
       - name: Run deployment commands
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
         run: |
-          ssh -i ~/sshkey ubuntu@vps.gajahweb.tech "
+          ssh -i ~/sshkey ${SSH_USERNAME}@${SSH_HOST} "
             echo 'Koneksi berhasil!'
             cd apps/paw_studycase
             git pull
-            docker compose down
-            docker compose up -d
           "
