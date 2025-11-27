@@ -83,6 +83,7 @@ class authController extends Controllers
             "google_id" => $userData["google_id"], 
             "profile" => $foto,
             "nama"    => $userData["nama"],
+            "email"    => $userData["email"],
             "alamat" => $userData['alamat'],
             "no_telepon" => $userData['no_telepon'],
             "role" => $userData["role"]
@@ -164,6 +165,9 @@ class authController extends Controllers
             "id" => $user['id'],
             "nama" => $user['nama'],
             "alamat" => $user['alamat'],
+            "profile" => "",
+            "email" => $user['email'],
+            "password" => $user['password'],
             "no_telepon" => $user['no_telepon'],
             "role" => $user['role'],
         ];
