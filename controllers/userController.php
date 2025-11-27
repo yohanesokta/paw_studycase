@@ -27,6 +27,35 @@ class userController extends Controllers
         ]);
     }
 
+    public function updateProfile()
+    {
+
+        $this->view("update_profile");
+    }
+
+    public function updateProfileProcess() {
+        // session_start();
+        var_dump($_SESSION);
+        $userModel = new UserModel($GLOBALS['connection']);
+
+        $id = $_SESSION['userdata']['id'];
+        $no_telepon = $_POST['no_telepon'];
+        $alamat = $_POST['alamat'];
+        $nama = $_POST['nama'];
+        $email = $_POST['email'];
+
+
+        $userModel->updateProfileProcess($id, $no_telepon, $alamat, $nama, $email);
+
+        $_SESSION['userdata']['no_telepon'] = $no_telepon;
+        $_SESSION['userdata']['alamat'] = $alamat;
+        $_SESSION['userdata']['nama'] = $nama;
+        $_SESSION['userdata']['email'] = $email;
+        // $_SESSION['userdata']['google_id'] = $google_id;
+
+        Redirect("/user/update-profile");
+    }
+
 
     public function pesanan()
     {

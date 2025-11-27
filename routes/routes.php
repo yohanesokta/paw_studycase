@@ -17,6 +17,7 @@ $Route->GET('/auth/register', 'authController@register');
 $Route->POST('/auth/register/process', 'authController@registerProcess');
 
 
+
 // $Route->GET("/admin","MainController@index","user"); contoh penggunaan middleware
 
 $Route->GET("/admin/dashboard","adminController@dashboard","admin");
@@ -31,10 +32,11 @@ $Route->GET("/admin/laporan","adminController@laporan", "admin");
 
 $Route->GET("/user/dashboard", "userController@index", "pelanggan");
 $Route->POST("/user/pesanan", "userController@pesanan", "pelanggan");
+$Route->GET('/user/update-profile', 'userController@updateProfile', 'pelanggan');
+$Route->POST('/user/update-profile-process', 'userController@updateProfileProcess', 'pelanggan');
+// $Route->POST('/auth/register/process', 'authController@registerProcess');
 
 $Route->GET("/logout","authController@logout");
-$Route->GET("/cek","authController@cek");
-
 
 
 $Route->JalankanRouting();

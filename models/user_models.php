@@ -43,6 +43,22 @@ class UserModel
         return mysqli_query($this->conn, $sql);
     }
 
+    public function updateProfileProcess($id, $telp, $alamat, $nama, $email)
+    {
+        $id = $id;
+        $telp = mysqli_real_escape_string($this->conn, $telp);
+        $alamat = mysqli_real_escape_string($this->conn, $alamat);
+        $nama = mysqli_real_escape_string($this->conn, $alamat);
+        $email = mysqli_real_escape_string($this->conn, $alamat);
+        // $google_id = mysqli_real_escape_string($this->conn, $google_id);
+
+        $sql = "UPDATE user 
+            SET no_telepon='$telp', alamat='$alamat', nama='$nama', email='$email'
+            WHERE id='$id'";
+
+        return mysqli_query($this->conn, $sql);
+    }
+
 
 
     public function findByEmail($email)
