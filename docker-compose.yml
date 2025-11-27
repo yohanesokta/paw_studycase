@@ -11,8 +11,6 @@ services:
       - app-network
     env_file:
       - .env
-    depends_on:
-      - db
 
   web:
     image: nginx:latest
