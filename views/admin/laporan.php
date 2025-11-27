@@ -9,7 +9,7 @@ require 'views/admin/components/header.php';
     <ul class="nav nav-tabs mb-4" id="reportTab" role="tablist">
         <li class="nav-item">
             <button class="nav-link active" id="uang-tab" data-bs-toggle="tab" data-bs-target="#uang" type="button">
-                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan
+                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan dan Pelanggan
             </button>
         </li>
         <li class="nav-item">
@@ -69,6 +69,55 @@ require 'views/admin/components/header.php';
                         </tr>
                     </tfoot>
                 </table>
+
+                <!-- Laporan data Pelanggan -->
+                <div>
+                    <h5 class="card-title fw-bold">Laporan Pelanggan</h5>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <button onclick="window.print()" class="#">
+                        Cetak Halaman
+                    </button>
+                    <div class="diagram">
+                        <div style="width: 60%; margin-top:20px;">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+
+                    <script>
+                    const ctx = document.getElementById('myChart');
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ["27-11-2025", "28-11-2025", "29-11-2025",],
+                            datasets: [{
+                                label: 'Total Pelanggan',
+                                data: [10, 15, 5],
+                                borderWidth: 2,
+                                borderColor: 'black',
+                                backgroundColor: 'pink'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display:true,
+                                        text: 'Banyak Pelanggan'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Tanggal Transaksi'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    </script>
+                </div>
             </div>
         </div>
 
