@@ -28,26 +28,52 @@ require 'views/admin/components/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>USR-091</td>
-                        <td>
-                            <div class="fw-bold">Ahmad Dhani</div>
-                            <div class="text-muted small"><i class="bi bi-telephone me-1"></i> 0812345678</div>
-                            <div class="text-muted small"><i class="bi bi-envelope me-1"></i> ahmad@mail.com</div>
-                        </td>
-                        <td>Jl. Pondok Indah No. 12, Jakarta</td>
-                        <td><span class="badge bg-secondary">Pelanggan</span></td>
-                        <td>
-                             <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                             <button class="btn btn-sm btn-outline-info" title="Lihat History Transaksi"><i class="bi bi-clock-history"></i></button>
-                        </td>
-                    </tr>
+
+                    <?php if (!empty($data)): ?>
+                        <?php foreach ($data as $p): ?>
+                            <tr>
+                                <td><?= $p['id']; ?></td>
+
+                                <td>
+                                    <div class="fw-bold"><?= $p['nama']; ?></div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-telephone me-1"></i> <?= $p['no_telepon']; ?>
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-envelope me-1"></i> <?= $p['email']; ?>
+                                    </div>
+                                </td>
+
+                                <td><?= $p['alamat']; ?></td>
+
+                                <td>
+                                    <span class="badge bg-secondary"><?= ucfirst($p['role']); ?></span>
+                                </td>
+
+                                <td class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+
+                                    <form method="POST" action="/admin/pelanggan/hapus" 
+                                          onsubmit="return confirm('Yakin ingin menghapus pelanggan ini?');">
+                                        <input type="hidden" name="id" value="<?= $p['id']; ?>">
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
+<!-- Modal Tambah Pelanggan -->
 <div class="modal fade" id="modalPelanggan" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -55,31 +81,37 @@ require 'views/admin/components/header.php';
                 <h5 class="modal-title">Tambah Pelanggan Manual</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="proses/tambah_user.php" method="POST">
+
+            <form action="/admin/pelanggan/tambah" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nama Lengkap</label>
                         <input type="text" name="nama" class="form-control" required>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">No. Telepon</label>
                             <input type="text" name="no_telepon" class="form-control" required>
                         </div>
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email</label>
                             <input type="email" name="email" class="form-control" required>
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Alamat Lengkap</label>
                         <textarea name="alamat" class="form-control" rows="3"></textarea>
                     </div>
-                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan Data</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
