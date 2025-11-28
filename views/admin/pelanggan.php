@@ -1,119 +1,307 @@
-<?php 
+<?php
 $currentPage = 'pelanggan';
 $title = 'Data Pelanggan';
 require 'views/admin/components/header.php';
 ?>
 
+<link rel="stylesheet" href="../public/css/admin-pelanggan.css">
+
+    
 <div class="container-fluid">
-    <div class="card table-card">
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-            <h5 class="mb-0 fw-bold">Database Pelanggan</h5>
-            <div class="d-flex gap-2">
-                <input type="text" class="form-control form-control-sm" placeholder="Cari nama/no hp..." style="width: 200px;">
-                <button class="btn btn-primary btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#modalPelanggan">
-                    <i class="bi bi-person-plus me-2"></i>Pelanggan Baru
+
+    <?php if (isset($_SESSION['flash'])): ?>
+        <?php
+        $flashType = $_SESSION['flash']['type'];
+        $flashClass = match ($flashType) {
+            'success' => 'flash-success',
+            'danger'  => 'flash-danger',
+            'warning' => 'flash-warning',
+            default   => 'flash-info'
+        };
+        ?>
+
+        <div id="flashAlert"
+            class="alert alert-<?= $flashType ?> alert-dismissible fade show position-relative"
+            role="alert"
+            style="border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <?= $_SESSION['flash']['message'] ?>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+            <div class="flash-progress">
+                <div class="flash-progress-bar <?= $flashClass ?>"></div>
+            </div>
+        </div>
+
+        <script>
+            setTimeout(() => {
+                let flash = document.getElementById('flashAlert');
+                if (flash) {
+                    flash.classList.remove('show');
+                    setTimeout(() => flash.remove(), 500);
+                }
+            }, 3000);
+        </script>
+
+        <?php unset($_SESSION['flash']); ?>
+    <?php endif; ?>
+
+    <div class="table-card">
+        <!-- Header Card -->
+        <div class="card-header-custom">
+            <h5>
+                <i class="bi bi-people-fill me-2"></i>
+                Database Pelanggan
+            </h5>
+            <div class="subtitle">Kelola data pelanggan Anda dengan mudah</div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div class="search-box" style="flex: 1; max-width: 400px;">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Cari nama, email, atau no telepon...">
+                </div>
+                <button class="btn btn-add-customer text-white" data-bs-toggle="modal" data-bs-target="#modalPelanggan">
+                    <i class="bi bi-person-plus-fill me-2"></i>Tambah Pelanggan
                 </button>
             </div>
         </div>
 
+        <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-striped align-middle">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th>ID User</th>
-                        <th>Info Pelanggan</th>
+                        <th style="width: 100px;">ID</th>
+                        <th>Informasi Pelanggan</th>
                         <th>Alamat</th>
-                        <th>Role</th>
-                        <th>Aksi</th>
+                        <th style="width: 120px;">Role</th>
+                        <th style="width: 100px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     <?php if (!empty($data)): ?>
                         <?php foreach ($data as $p): ?>
                             <tr>
-                                <td><?= $p['id']; ?></td>
+                                <td>
+                                    <span class="id-badge">#<?= $p['id']; ?></span>
+                                </td>
 
                                 <td>
-                                    <div class="fw-bold"><?= $p['nama']; ?></div>
-                                    <div class="text-muted small">
-                                        <i class="bi bi-telephone me-1"></i> <?= $p['no_telepon']; ?>
-                                    </div>
-                                    <div class="text-muted small">
-                                        <i class="bi bi-envelope me-1"></i> <?= $p['email']; ?>
+                                    <div class="customer-info">
+                                        <div class="customer-avatar">
+                                            <?= strtoupper(substr($p['nama'], 0, 1)); ?>
+                                        </div>
+                                        <div class="customer-details">
+                                            <div class="name"><?= htmlspecialchars($p['nama']); ?></div>
+                                            <div class="contact">
+                                                <i class="bi bi-telephone-fill"></i>
+                                                <span><?= htmlspecialchars($p['no_telepon']); ?></span>
+                                            </div>
+                                            <div class="contact">
+                                                <i class="bi bi-envelope-fill"></i>
+                                                <span><?= htmlspecialchars($p['email']); ?></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
 
-                                <td><?= $p['alamat']; ?></td>
-
                                 <td>
-                                    <span class="badge bg-secondary"><?= ucfirst($p['role']); ?></span>
+                                    <i class="bi bi-geo-alt-fill text-muted me-1"></i>
+                                    <?= htmlspecialchars($p['alamat']); ?>
                                 </td>
 
-                                <td class="d-flex gap-1">
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+                                <td>
+                                    <span class="badge badge-role <?= $p['role'] === 'admin' ? 'badge-admin' : 'badge-user' ?>">
+                                        <?= ucfirst($p['role']); ?>
+                                    </span>
+                                </td>
 
-                                    <form method="POST" action="/admin/pelanggan/hapus" 
-                                          onsubmit="return confirm('Yakin ingin menghapus pelanggan ini?');">
-                                        <input type="hidden" name="id" value="<?= $p['id']; ?>">
-                                        <button class="btn btn-sm btn-outline-danger">
-                                            <i class="bi bi-trash"></i>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-action btn-edit"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEditPelanggan"
+                                            data-id="<?= $p['id']; ?>"
+                                            data-nama="<?= htmlspecialchars($p['nama']); ?>"
+                                            data-no="<?= htmlspecialchars($p['no_telepon']); ?>"
+                                            data-email="<?= htmlspecialchars($p['email']); ?>"
+                                            data-alamat="<?= htmlspecialchars($p['alamat']); ?>"
+                                            title="Edit">
+                                            <i class="bi bi-pencil-fill"></i>
                                         </button>
-                                    </form>
+
+                                        <form method="POST" action="<?= URL('/admin/pelanggan/hapus') ?>" style="display: inline;"
+                                            onsubmit="return confirm('⚠️ Yakin ingin menghapus pelanggan ini?\n\nData yang sudah dihapus tidak dapat dikembalikan.');">
+                                            <input type="hidden" name="id" value="<?= $p['id']; ?>">
+                                            <button type="submit" class="btn btn-action btn-delete" title="Hapus">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <i class="bi bi-inbox"></i>
+                                    <h5>Belum Ada Data Pelanggan</h5>
+                                    <p>Klik tombol "Tambah Pelanggan" untuk menambahkan data baru</p>
+                                </div>
+                            </td>
+                        </tr>
                     <?php endif; ?>
-
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Modal Tambah Pelanggan -->
+
+<!-- MODAL TAMBAH -->
 <div class="modal fade" id="modalPelanggan" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Pelanggan Manual</h5>
+                <h5 class="modal-title">
+                    <i class="bi bi-person-plus-fill me-2"></i>
+                    Tambah Pelanggan Baru
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="/admin/pelanggan/tambah" method="POST">
+            <form action="<?= URL('/admin/pelanggan/tambah') ?>" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" name="nama" class="form-control" required>
+                        <label class="form-label">
+                            <i class="bi bi-person me-1"></i> Nama Lengkap
+                        </label>
+                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama lengkap" required>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">No. Telepon</label>
-                            <input type="text" name="no_telepon" class="form-control" required>
+                            <label class="form-label">
+                                <i class="bi bi-telephone me-1"></i> No. Telepon
+                            </label>
+                            <input type="text" name="no_telepon" class="form-control" placeholder="08xxxxxxxxxx" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" required>
+                            <label class="form-label">
+                                <i class="bi bi-envelope me-1"></i> Email
+                            </label>
+                            <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Alamat Lengkap</label>
-                        <textarea name="alamat" class="form-control" rows="3"></textarea>
+                        <label class="form-label">
+                            <i class="bi bi-geo-alt me-1"></i> Alamat Lengkap
+                        </label>
+                        <textarea name="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap" required></textarea>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-modal-submit text-white">
+                        <i class="bi bi-save me-2"></i>Simpan Data
+                    </button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
+
+
+<!-- MODAL EDIT -->
+<div class="modal fade" id="modalEditPelanggan" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Edit Data Pelanggan
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="<?= URL('/admin/pelanggan/update') ?>" method="POST">
+                <input type="hidden" name="id" id="edit-id">
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="bi bi-person me-1"></i> Nama Lengkap
+                        </label>
+                        <input type="text" name="nama" id="edit-nama" class="form-control" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-telephone me-1"></i> No. Telepon
+                            </label>
+                            <input type="text" name="no_telepon" id="edit-no" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-envelope me-1"></i> Email
+                            </label>
+                            <input type="email" name="email" id="edit-email" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="bi bi-geo-alt me-1"></i> Alamat Lengkap
+                        </label>
+                        <textarea name="alamat" id="edit-alamat" class="form-control" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-modal-submit text-white">
+                        <i class="bi bi-check-circle me-2"></i>Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // AUTO-FILL MODAL EDIT
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.getElementById('edit-id').value = this.dataset.id;
+            document.getElementById('edit-nama').value = this.dataset.nama;
+            document.getElementById('edit-no').value = this.dataset.no;
+            document.getElementById('edit-email').value = this.dataset.email;
+            document.getElementById('edit-alamat').value = this.dataset.alamat;
+        });
+    });
+
+    // SEARCH FUNCTIONALITY
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('tbody tr');
+        
+        tableRows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchValue) ? '' : 'none';
+        });
+    });
+</script>
 
 <?php require 'views/admin/components/footer.php'; ?>
