@@ -50,11 +50,13 @@
                         <a class="nav-link dropdown-toggle d-flex align-items-center"
                             href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-
                             <!-- Foto profile -->
-                            <img src="<?= $_SESSION['userdata']['profile'] ?? 'https://ui-avatars.com/api/?name=' . urlencode($_SESSION['userdata']['nama']); ?>"
-                                class="rounded-circle me-2"
-                                width="35" height="35" style="object-fit: cover;">
+                            <?php if ($_SESSION['userdata']['profile']) : ?>
+                                <img src="<?= $_SESSION['userdata']['profile'] ?>"
+                                    class="avatar-img me-2" alt="Profile Picture" style="width: 35px; height: 35px;">
+                            <?php else : ?>
+                                <div class="avatar-profile me-2"><?=  $_SESSION['userdata']['nama'][0]; ?></div>
+                            <?php endif; ?>
 
                             <!-- Nama user -->
                             <span class="fw-semibold">
@@ -63,18 +65,18 @@
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end shadow">
-                      
+
                             <li><a class="dropdown-item" href="<?= URL('/user/update-profile') ?>">
                                     <i class="fas fa-user-edit me-2"></i>Update Profil
                                 </a></li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li><a class="dropdown-item text-danger" href="<?= URL('/logout') ?>">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
-                                </a></li>
-                        </ul>
+                            <hr class="dropdown-divider">
                     </li>
+
+                    <li><a class="dropdown-item text-danger" href="<?= URL('/logout') ?>">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                </ul>
+                </li>
 
                 </ul>
             </div>

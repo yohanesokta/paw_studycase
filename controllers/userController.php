@@ -35,7 +35,7 @@ class userController extends Controllers
 
     public function updateProfileProcess() {
         // session_start();
-        var_dump($_SESSION);
+
         $userModel = new UserModel($GLOBALS['connection']);
 
         $id = $_SESSION['userdata']['id'];
@@ -52,6 +52,8 @@ class userController extends Controllers
         $_SESSION['userdata']['nama'] = $nama;
         $_SESSION['userdata']['email'] = $email;
         // $_SESSION['userdata']['google_id'] = $google_id;
+
+        $_SESSION['success_message'] = "Update profil berhasil!";
 
         Redirect("/user/update-profile");
     }

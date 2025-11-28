@@ -48,8 +48,8 @@ class UserModel
         $id = $id;
         $telp = mysqli_real_escape_string($this->conn, $telp);
         $alamat = mysqli_real_escape_string($this->conn, $alamat);
-        $nama = mysqli_real_escape_string($this->conn, $alamat);
-        $email = mysqli_real_escape_string($this->conn, $alamat);
+        $nama = mysqli_real_escape_string($this->conn, $nama);
+        $email = mysqli_real_escape_string($this->conn, $email);
         // $google_id = mysqli_real_escape_string($this->conn, $google_id);
 
         $sql = "UPDATE user 
