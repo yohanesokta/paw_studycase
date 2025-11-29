@@ -25,14 +25,34 @@ require 'views/admin/components/header.php';
             <div class="card table-card mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title fw-bold">Pemasukan Bulanan</h5>
+
                     <div class="d-flex gap-2">
-                        <select class="form-select form-select-sm" style="width: 120px;">
-                            <option>Tahun 2023</option>
-                            <option>Tahun 2022</option>
-                        </select>
-                        <button class="btn btn-sm btn-success"><i class="bi bi-file-earmark-excel"></i> Export Excel</button>
+                        <!-- FILTER TAHUN -->
+                        <form method="GET" action="" class="d-flex gap-2">
+                            <select name="tahun" class="form-select form-select-sm" style="width: 120px;"
+                                    onchange="this.form.submit()">
+                                <?php foreach ($tahunList as $th): ?>
+                                    <option value="<?= $th ?>" <?= $th == $tahunDipilih ? 'selected' : '' ?>>
+                                        Tahun <?= $th ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </form>
+
+                        <!-- CETAK HALAMAN -->
+                        <button onclick="window.print()">
+                            Cetak Halaman
+                        </button>
+
+                        <!-- EXPORT EXCEL -->
+                        <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
+                        class="btn btn-sm btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export Excel
+                        </a>
                     </div>
                 </div>
+
+                <!-- TABLE -->
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
@@ -44,80 +64,91 @@ require 'views/admin/components/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Oktober</td>
-                            <td>150</td>
-                            <td>Rp 10.000.000</td>
-                            <td class="text-danger">Rp 500.000</td>
-                            <td class="fw-bold">Rp 10.500.000</td>
-                        </tr>
-                        <tr>
-                            <td>September</td>
-                            <td>120</td>
-                            <td>Rp 8.000.000</td>
-                            <td class="text-danger">Rp 0</td>
-                            <td class="fw-bold">Rp 8.000.000</td>
-                        </tr>
+                        <?php 
+                        $total_trans = 0;
+                        $total_terbayar = 0;
+                        $total_piutang = 0;
+                        $total_omset = 0;
+                        ?>
+
+                        <?php foreach ($laporanBulanan as $row): ?>
+                            <?php
+                            $total_trans += $row['jumlah_transaksi'];
+                            $total_terbayar += $row['terbayar'];
+                            $total_piutang += $row['piutang'];
+                            $total_omset += $row['total_omset'];
+                            ?>
+                            <tr>
+                                <td><?= $row['bulan'] ?></td>
+                                <td><?= $row['jumlah_transaksi'] ?></td>
+
+                                <td>Rp <?= number_format($row['terbayar'], 0, ',', '.') ?></td>
+
+                                <td class="<?= $row['piutang'] > 0 ? 'text-danger' : '' ?>">
+                                    Rp <?= number_format($row['piutang'], 0, ',', '.') ?>
+                                </td>
+
+                                <td class="fw-bold">
+                                    Rp <?= number_format($row['total_omset'], 0, ',', '.') ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
+
                     <tfoot class="table-light fw-bold">
                         <tr>
                             <td>TOTAL TAHUN INI</td>
-                            <td>270</td>
-                            <td>Rp 18.000.000</td>
-                            <td>Rp 500.000</td>
-                            <td>Rp 18.500.000</td>
+                            <td><?= $total_trans ?></td>
+                            <td>Rp <?= number_format($total_terbayar, 0, ',', '.') ?></td>
+                            <td>Rp <?= number_format($total_piutang, 0, ',', '.') ?></td>
+                            <td>Rp <?= number_format($total_omset, 0, ',', '.') ?></td>
                         </tr>
                     </tfoot>
                 </table>
 
-                <!-- Laporan data Pelanggan -->
-                <div>
-                    <h5 class="card-title fw-bold">Laporan Pelanggan</h5>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <button onclick="window.print()" class="#">
-                        Cetak Halaman
-                    </button>
-                    <div class="diagram">
-                        <div style="width: 60%; margin-top:20px;">
-                            <canvas id="myChart"></canvas>
-                        </div>
+                <!-- DIAGRAM LAPORAN -->
+                <h5 class="card-title fw-bold">Laporan Pelanggan</h5>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <div class="diagram">
+                    <div style="width: 60%; margin-top:20px;">
+                        <canvas id="myChart"></canvas>
                     </div>
+                </div>
 
-                    <script>
-                    const ctx = document.getElementById('myChart');
+                <script>
+                const ctx = document.getElementById('myChart');
 
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ["27-11-2025", "28-11-2025", "29-11-2025",],
-                            datasets: [{
-                                label: 'Total Pelanggan',
-                                data: [10, 15, 5],
-                                borderWidth: 2,
-                                borderColor: 'black',
-                                backgroundColor: 'pink'
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display:true,
-                                        text: 'Banyak Pelanggan'
-                                    }
-                                },
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Tanggal Transaksi'
-                                    }
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: <?= json_encode($labels); ?>,
+                        datasets: [{
+                            label: 'Banyaknya Pelanggan',
+                            data: <?= json_encode($values); ?>,
+                            borderWidth: 2,
+                            borderColor: 'black',
+                            backgroundColor: 'pink'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display:true,
+                                    text: 'Total'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Tanggal Transaksi'
                                 }
                             }
                         }
-                    });
-                    </script>
-                </div>
+                    }
+                });
+                </script>
             </div>
         </div>
 
