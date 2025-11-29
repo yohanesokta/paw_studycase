@@ -47,4 +47,8 @@ class adminController extends Controllers {
      public function laporan() {
         $this->view('admin/laporan');
     }
+     public function masterharga() {
+        $this->view('admin/masterharga');
+    }
+
 }
