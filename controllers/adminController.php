@@ -113,8 +113,8 @@ class adminController extends Controllers
     {
         $this->view('admin/laporan');
     }
-    
-    public function masterharga() 
+
+    public function masterharga()
     {
         $this->view('admin/masterharga');
     }
