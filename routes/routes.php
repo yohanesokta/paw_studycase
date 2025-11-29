@@ -29,7 +29,6 @@ $Route->POST('/admin/pesanan/update','adminController@updatePesanan','admin');
 
 $Route->GET("/admin/harga","adminController@harga","admin");
 $Route->GET("/admin/pelanggan","adminController@pelanggan", "admin");
-$Route->POST("/admin/pelanggan/tambah","adminController@tambahPelanggan","admin");
 $Route->POST("/admin/pelanggan/hapus","adminController@hapusPelanggan","admin");
 $Route->GET("/admin/pelanggan/edit","adminController@editPelanggan","admin");
 $Route->POST("/admin/pelanggan/update","adminController@updatePelanggan","admin");

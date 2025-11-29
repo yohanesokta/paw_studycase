@@ -65,9 +65,6 @@ require 'views/admin/components/header.php';
                     <i class="bi bi-search"></i>
                     <input type="text" id="searchInput" class="form-control" placeholder="Cari nama, email, atau no telepon...">
                 </div>
-                <button class="btn btn-add-customer text-white" data-bs-toggle="modal" data-bs-target="#modalPelanggan">
-                    <i class="bi bi-person-plus-fill me-2"></i>Tambah Pelanggan
-                </button>
             </div>
         </div>
 
@@ -76,7 +73,7 @@ require 'views/admin/components/header.php';
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 100px;">ID</th>
+                        <th style="width: 80px;">No</th>
                         <th>Informasi Pelanggan</th>
                         <th>Alamat</th>
                         <th style="width: 120px;">Role</th>
@@ -85,10 +82,11 @@ require 'views/admin/components/header.php';
                 </thead>
                 <tbody>
                     <?php if (!empty($data)): ?>
+                        <?php $no = 1; ?>
                         <?php foreach ($data as $p): ?>
                             <tr>
                                 <td>
-                                    <span class="id-badge">#<?= $p['id']; ?></span>
+                                    <span class="id-badge"><?= $no++; ?></span>
                                 </td>
 
                                 <td>
@@ -152,70 +150,13 @@ require 'views/admin/components/header.php';
                                 <div class="empty-state">
                                     <i class="bi bi-inbox"></i>
                                     <h5>Belum Ada Data Pelanggan</h5>
-                                    <p>Klik tombol "Tambah Pelanggan" untuk menambahkan data baru</p>
+                                    <p>Data pelanggan akan muncul di sini</p>
                                 </div>
                             </td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-
-
-<!-- MODAL TAMBAH -->
-<div class="modal fade" id="modalPelanggan" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="bi bi-person-plus-fill me-2"></i>
-                    Tambah Pelanggan Baru
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <form action="<?= URL('/admin/pelanggan/tambah') ?>" method="POST">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">
-                            <i class="bi bi-person me-1"></i> Nama Lengkap
-                        </label>
-                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama lengkap" required>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                <i class="bi bi-telephone me-1"></i> No. Telepon
-                            </label>
-                            <input type="text" name="no_telepon" class="form-control" placeholder="08xxxxxxxxxx" required>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                <i class="bi bi-envelope me-1"></i> Email
-                            </label>
-                            <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">
-                            <i class="bi bi-geo-alt me-1"></i> Alamat Lengkap
-                        </label>
-                        <textarea name="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap" required></textarea>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-modal-submit text-white">
-                        <i class="bi bi-save me-2"></i>Simpan Data
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
