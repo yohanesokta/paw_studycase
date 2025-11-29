@@ -89,22 +89,10 @@ class AdminModels
                 FROM user WHERE id=?";
 
         $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("s", $id);
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc();
-    }
-
-    public function addPelanggan($nama, $email, $telp, $alamat)
-    {
-        $role = "pelanggan";
-        $SQL = "INSERT INTO user (nama, email, no_telepon, alamat, role)
-                VALUES (?, ?, ?, ?, ?)";
-
-        $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("sssss", $nama, $email, $telp, $alamat, $role);
-
-        return $stmt->execute();
     }
 
     public function updatePelanggan($id, $nama, $email, $telp, $alamat)
@@ -112,9 +100,8 @@ class AdminModels
         $SQL = "UPDATE user 
                 SET nama=?, email=?, no_telepon=?, alamat=? 
                 WHERE id=?";
-
         $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("ssssi", $nama, $email, $telp, $alamat, $id);
+        $stmt->bind_param("sssss", $nama, $email, $telp, $alamat, $id);
         return $stmt->execute();
     }
 

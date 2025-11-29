@@ -96,7 +96,7 @@ require 'views/admin/components/header.php';
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID ORDER</th>
+                        <th style="width: 60px;">NO</th>
                         <th>TANGGAL</th>
                         <th>PELANGGAN</th>
                         <th>JENIS LAYANAN</th>
@@ -108,6 +108,7 @@ require 'views/admin/components/header.php';
                 </thead>
                 <tbody>
                     <?php if (!empty($data) && count($data) > 0): ?>
+                        <?php $no = 1; ?>
                         <?php foreach ($data as $value): ?>
 
                         <?php 
@@ -124,10 +125,10 @@ require 'views/admin/components/header.php';
                         ?>
 
                         <tr>
-                            <!-- ID ORDER -->
+                            <!-- NOMOR URUT -->
                             <td>
                                 <span class="order-id">
-                                    #<?= htmlspecialchars($value['id_pesanan'] ?? '-') ?>
+                                    <?= $no++ ?>
                                 </span>
                             </td>
 
