@@ -9,6 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/home.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body class="bg-light">
@@ -29,19 +31,59 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
+
             <a class="navbar-brand" href="#">
                 <i class="fas fa-droplet me-2"></i>Fresh Laundry User
             </a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="btn btn-login btn-sm" href="<?= URL('/logout') ?>">Logout</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+
+                <ul class="navbar-nav align-items-center">
+
+                    <!-- Dropdown User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center"
+                            href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <!-- Foto profile -->
+                            <?php if ($_SESSION['userdata']['profile']) : ?>
+                                <img src="<?= $_SESSION['userdata']['profile'] ?>"
+                                    class="avatar-img me-2" alt="Profile Picture" style="width: 35px; height: 35px;">
+                            <?php else : ?>
+                                <div class="avatar-profile me-2"><?=  $_SESSION['userdata']['nama'][0]; ?></div>
+                            <?php endif; ?>
+
+                            <!-- Nama user -->
+                            <span class="fw-semibold">
+                                <?= $_SESSION['userdata']['nama']; ?>
+                            </span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                            <li><a class="dropdown-item" href="<?= URL('/user/update-profile') ?>">
+                                    <i class="fas fa-user-edit me-2"></i>Update Profil
+                                </a></li>
+                            <hr class="dropdown-divider">
                     </li>
+
+                    <li><a class="dropdown-item text-danger" href="<?= URL('/logout') ?>">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                </ul>
+                </li>
+
                 </ul>
             </div>
 
         </div>
     </nav>
+
 
     <section class="py-4 bg-white shadow-sm mb-4">
         <div class="container">
@@ -105,13 +147,13 @@
 
                         <div class="mb-3">
                             <small class="text-white-50">Nama Pemesan</small>
-                            <h5 class="fw-bold">Agus Susanto</h5>
+                            <h5 class="fw-bold"><?= $_SESSION['userdata']['nama']; ?></h5>
                         </div>
 
                         <div class="mb-3">
                             <small class="text-white-50">Alamat & Kontak</small>
-                            <p class="mb-0">Jl. Telang Indah No. 12, Kamal</p>
-                            <p class="mb-0"><i class="fas fa-phone-alt me-1"></i> 0812-3456-7890</p>
+                            <p class="mb-0"><?= $_SESSION['userdata']['alamat']; ?></p>
+                            <p class="mb-0"><i class="fas fa-phone-alt me-1"></i><?= $_SESSION['userdata']['no_telepon']; ?></p>
                         </div>
 
                         <div class="row mt-4">

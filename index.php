@@ -6,3 +6,4 @@ if (!isset($_ENV['production'])) {
 }
 require_once "lib/loader.php";
 require_once "routes/routes.php";
+
