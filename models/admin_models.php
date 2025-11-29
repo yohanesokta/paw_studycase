@@ -147,7 +147,7 @@ class AdminModels
                     DATE_FORMAT(tanggal, '%M') AS bulan,
                     COUNT(id_user) AS jumlah_transaksi,
                     SUM(CASE WHEN status='dibayar' THEN harga ELSE 0 END) AS terbayar,
-                    SUM(CASE WHEN status='belum_bayar' THEN harga ELSE 0 END) AS piutang,
+                    SUM(CASE WHEN status='belum_dibayar' THEN harga ELSE 0 END) AS piutang,
                     SUM(harga) AS total_omset
                 FROM transaksi
                 WHERE YEAR(tanggal) = '$tahun'
