@@ -41,6 +41,9 @@ $Route->POST('/user/update-profile-process', 'userController@updateProfileProces
 // $Route->POST('/auth/register/process', 'authController@registerProcess');
 
 $Route->GET("/logout","authController@logout");
+$Route->GET("/cek","authController@cek");
+
+$Route->GET("/masterharga","authController@masterharga");
 
 
 $Route->JalankanRouting();
