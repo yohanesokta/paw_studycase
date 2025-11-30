@@ -11,6 +11,7 @@ require 'views/admin/components/header.php';
                 <div>
                     <p class="text-muted mb-1 small text-uppercase fw-bold">Order Masuk</p>
 
+                    
                     <h3 class="mb-0 fw-bold"><?= $orderMasuk ?></h3>
                 </div>
                 <div class="icon-box bg-primary bg-opacity-10 text-primary">

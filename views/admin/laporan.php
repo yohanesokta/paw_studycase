@@ -7,16 +7,9 @@ require 'views/admin/components/header.php';
 <div class="container-fluid">
 
     <ul class="nav nav-tabs mb-4" id="reportTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active"
-                id="uang-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#uang"
-                type="button"
-                role="tab"
-                aria-controls="uang"
-                aria-selected="true">
-                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan
+        <li class="nav-item">
+            <button class="nav-link active" id="uang-tab" data-bs-toggle="tab" data-bs-target="#uang" type="button">
+                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan dan Pelanggan
             </button>
         </li>
 
@@ -66,10 +59,8 @@ require 'views/admin/components/header.php';
                         </button>
 
                         <!-- EXPORT EXCEL -->
-                        <!-- <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
-                        class="btn btn-sm btn-success">
-                            <i class="bi bi-file-earmark-excel"></i> Export Excel
-                        </a> -->
+                        <!-- <button class="btn btn-sm btn-success exportBtn">Export ke Excel</button> -->
+
                     </div>
                 </div>
 
