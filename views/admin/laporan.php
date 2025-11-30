@@ -59,7 +59,7 @@ require 'views/admin/components/header.php';
                         </button>
 
                         <!-- EXPORT EXCEL -->
-                        <!-- <button class="btn btn-sm btn-success exportBtn">Export ke Excel</button> -->
+                        <button class="btn btn-sm btn-success" onclick="window.location.href='../admin/laporan/export?tahun=<?= $tahunDipilih ?>'">Export ke Excel</button>
 
                     </div>
                 </div>
