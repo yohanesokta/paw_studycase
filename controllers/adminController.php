@@ -139,6 +139,10 @@ class adminController extends Controllers
             'values' => $values
         ]);
     }
-
     
+    public function masterharga() 
+    {
+        $this->view('admin/masterharga');
+    }
+
 }
