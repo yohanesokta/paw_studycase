@@ -2,11 +2,15 @@
 $currentPage = 'pelanggan';
 $title = 'Data Pelanggan';
 require 'views/admin/components/header.php';
+
+// helper anti-XSS + aman untuk null
+function h($v) {
+    return htmlspecialchars($v ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
 ?>
 
 <link rel="stylesheet" href="../public/css/admin-pelanggan.css">
 
-    
 <div class="container-fluid">
 
     <?php if (isset($_SESSION['flash'])): ?>
@@ -26,7 +30,7 @@ require 'views/admin/components/header.php';
             style="border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
 
             <i class="bi bi-check-circle-fill me-2"></i>
-            <?= $_SESSION['flash']['message'] ?>
+            <?= h($_SESSION['flash']['message']) ?>
 
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 
@@ -49,16 +53,11 @@ require 'views/admin/components/header.php';
     <?php endif; ?>
 
     <div class="table-card">
-        <!-- Header Card -->
         <div class="card-header-custom">
-            <h5>
-                <i class="bi bi-people-fill me-2"></i>
-                Database Pelanggan
-            </h5>
+            <h5><i class="bi bi-people-fill me-2"></i>Database Pelanggan</h5>
             <div class="subtitle">Kelola data pelanggan Anda dengan mudah</div>
         </div>
 
-        <!-- Action Bar -->
         <div class="action-bar">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                 <div class="search-box" style="flex: 1; max-width: 400px;">
@@ -68,7 +67,6 @@ require 'views/admin/components/header.php';
             </div>
         </div>
 
-        <!-- Table -->
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -81,28 +79,27 @@ require 'views/admin/components/header.php';
                     </tr>
                 </thead>
                 <tbody>
+
                     <?php if (!empty($data)): ?>
                         <?php $no = 1; ?>
                         <?php foreach ($data as $p): ?>
                             <tr>
-                                <td>
-                                    <span class="id-badge"><?= $no++; ?></span>
-                                </td>
+                                <td><span class="id-badge"><?= $no++; ?></span></td>
 
                                 <td>
                                     <div class="customer-info">
                                         <div class="customer-avatar">
-                                            <?= strtoupper(substr($p['nama'], 0, 1)); ?>
+                                            <?= strtoupper(substr(h($p['nama']), 0, 1)) ?>
                                         </div>
                                         <div class="customer-details">
-                                            <div class="name"><?= htmlspecialchars($p['nama']); ?></div>
+                                            <div class="name"><?= h($p['nama']) ?></div>
                                             <div class="contact">
                                                 <i class="bi bi-telephone-fill"></i>
-                                                <span><?= htmlspecialchars($p['no_telepon']); ?></span>
+                                                <span><?= h($p['no_telepon']) ?></span>
                                             </div>
                                             <div class="contact">
                                                 <i class="bi bi-envelope-fill"></i>
-                                                <span><?= htmlspecialchars($p['email']); ?></span>
+                                                <span><?= h($p['email']) ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -110,12 +107,12 @@ require 'views/admin/components/header.php';
 
                                 <td>
                                     <i class="bi bi-geo-alt-fill text-muted me-1"></i>
-                                    <?= htmlspecialchars($p['alamat']); ?>
+                                    <?= h($p['alamat']) ?>
                                 </td>
 
                                 <td>
                                     <span class="badge badge-role <?= $p['role'] === 'admin' ? 'badge-admin' : 'badge-user' ?>">
-                                        <?= ucfirst($p['role']); ?>
+                                        <?= h(ucfirst($p['role'])) ?>
                                     </span>
                                 </td>
 
@@ -124,18 +121,18 @@ require 'views/admin/components/header.php';
                                         <button class="btn btn-action btn-edit"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalEditPelanggan"
-                                            data-id="<?= $p['id']; ?>"
-                                            data-nama="<?= htmlspecialchars($p['nama']); ?>"
-                                            data-no="<?= htmlspecialchars($p['no_telepon']); ?>"
-                                            data-email="<?= htmlspecialchars($p['email']); ?>"
-                                            data-alamat="<?= htmlspecialchars($p['alamat']); ?>"
+                                            data-id="<?= h($p['id']) ?>"
+                                            data-nama="<?= h($p['nama']) ?>"
+                                            data-no="<?= h($p['no_telepon']) ?>"
+                                            data-email="<?= h($p['email']) ?>"
+                                            data-alamat="<?= h($p['alamat']) ?>"
                                             title="Edit">
                                             <i class="bi bi-pencil-fill"></i>
                                         </button>
 
                                         <form method="POST" action="<?= URL('/admin/pelanggan/hapus') ?>" style="display: inline;"
                                             onsubmit="return confirm('⚠️ Yakin ingin menghapus pelanggan ini?\n\nData yang sudah dihapus tidak dapat dikembalikan.');">
-                                            <input type="hidden" name="id" value="<?= $p['id']; ?>">
+                                            <input type="hidden" name="id" value="<?= h($p['id']) ?>">
                                             <button type="submit" class="btn btn-action btn-delete" title="Hapus">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
@@ -144,6 +141,7 @@ require 'views/admin/components/header.php';
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+
                     <?php else: ?>
                         <tr>
                             <td colspan="5">
@@ -155,22 +153,19 @@ require 'views/admin/components/header.php';
                             </td>
                         </tr>
                     <?php endif; ?>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-
 <!-- MODAL EDIT -->
 <div class="modal fade" id="modalEditPelanggan" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="bi bi-pencil-square me-2"></i>
-                    Edit Data Pelanggan
-                </h5>
+                <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Edit Data Pelanggan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -179,32 +174,24 @@ require 'views/admin/components/header.php';
 
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">
-                            <i class="bi bi-person me-1"></i> Nama Lengkap
-                        </label>
+                        <label class="form-label"><i class="bi bi-person me-1"></i> Nama Lengkap</label>
                         <input type="text" name="nama" id="edit-nama" class="form-control" required>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                <i class="bi bi-telephone me-1"></i> No. Telepon
-                            </label>
+                            <label class="form-label"><i class="bi bi-telephone me-1"></i> No. Telepon</label>
                             <input type="text" name="no_telepon" id="edit-no" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                <i class="bi bi-envelope me-1"></i> Email
-                            </label>
+                            <label class="form-label"><i class="bi bi-envelope me-1"></i> Email</label>
                             <input type="email" name="email" id="edit-email" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">
-                            <i class="bi bi-geo-alt me-1"></i> Alamat Lengkap
-                        </label>
+                        <label class="form-label"><i class="bi bi-geo-alt me-1"></i> Alamat Lengkap</label>
                         <textarea name="alamat" id="edit-alamat" class="form-control" rows="3" required></textarea>
                     </div>
                 </div>
@@ -220,29 +207,26 @@ require 'views/admin/components/header.php';
     </div>
 </div>
 
-
 <script>
-    // AUTO-FILL MODAL EDIT
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.getElementById('edit-id').value = this.dataset.id;
-            document.getElementById('edit-nama').value = this.dataset.nama;
-            document.getElementById('edit-no').value = this.dataset.no;
-            document.getElementById('edit-email').value = this.dataset.email;
-            document.getElementById('edit-alamat').value = this.dataset.alamat;
-        });
+document.querySelectorAll('.btn-edit').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.getElementById('edit-id').value = this.dataset.id;
+        document.getElementById('edit-nama').value = this.dataset.nama;
+        document.getElementById('edit-no').value = this.dataset.no;
+        document.getElementById('edit-email').value = this.dataset.email;
+        document.getElementById('edit-alamat').value = this.dataset.alamat;
     });
+});
 
-    // SEARCH FUNCTIONALITY
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const searchValue = this.value.toLowerCase();
-        const tableRows = document.querySelectorAll('tbody tr');
-        
-        tableRows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(searchValue) ? '' : 'none';
-        });
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchValue = this.value.toLowerCase();
+    const tableRows = document.querySelectorAll('tbody tr');
+    
+    tableRows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchValue) ? '' : 'none';
     });
+});
 </script>
 
 <?php require 'views/admin/components/footer.php'; ?>

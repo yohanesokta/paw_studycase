@@ -1,31 +1,41 @@
-<?php 
+<?php
 $currentPage = 'laporan';
 $title = 'Laporan & Analitik';
 require 'views/admin/components/header.php';
 ?>
 
 <div class="container-fluid">
-    
+
     <ul class="nav nav-tabs mb-4" id="reportTab" role="tablist">
         <li class="nav-item">
             <button class="nav-link active" id="uang-tab" data-bs-toggle="tab" data-bs-target="#uang" type="button">
-                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan
+                <i class="bi bi-cash-coin me-2"></i>Laporan Keuangan dan Pelanggan
             </button>
         </li>
-        <li class="nav-item">
-            <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button">
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link"
+                id="pending-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#pending"
+                type="button"
+                role="tab"
+                aria-controls="pending"
+                aria-selected="false">
                 <i class="bi bi-exclamation-triangle me-2"></i>Order Belum Selesai
             </button>
         </li>
+
     </ul>
 
     <div class="tab-content" id="reportTabContent">
-        
+
         <!-- MEMANGGIL FILE CSS KHUSUS PRINT AREA     -->
         <link rel="stylesheet" href="../public/css/print.css">
 
         <!-- AREA YANG AKAN DI PRINT/CETAK -->
-        <div id="print-area" class="tab-pane fade show active" id="uang" role="tabpanel">
+        <div class="tab-pane fade show active print-area"
+            id="uang" role="tabpanel" aria-labelledby="uang-tab">
             <div class="card table-card mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title fw-bold">Pemasukan Bulanan</h5>
@@ -34,7 +44,7 @@ require 'views/admin/components/header.php';
                         <!-- FILTER TAHUN -->
                         <form method="GET" action="" class="d-flex gap-2">
                             <select name="tahun" class="form-select form-select-sm" style="width: 120px;"
-                                    onchange="this.form.submit()">
+                                onchange="this.form.submit()">
                                 <?php foreach ($tahunList as $th): ?>
                                     <option value="<?= $th ?>" <?= $th == $tahunDipilih ? 'selected' : '' ?>>
                                         Tahun <?= $th ?>
@@ -49,10 +59,8 @@ require 'views/admin/components/header.php';
                         </button>
 
                         <!-- EXPORT EXCEL -->
-                        <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
-                        class="btn btn-sm btn-success">
-                            <i class="bi bi-file-earmark-excel"></i> Export Excel
-                        </a>
+                        <!-- <button class="btn btn-sm btn-success exportBtn">Export ke Excel</button> -->
+
                     </div>
                 </div>
 
@@ -68,7 +76,7 @@ require 'views/admin/components/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
+                        <?php
                         $total_trans = 0;
                         $total_terbayar = 0;
                         $total_piutang = 0;
@@ -120,38 +128,38 @@ require 'views/admin/components/header.php';
                 </div>
 
                 <script>
-                const ctx = document.getElementById('myChart');
+                    const ctx = document.getElementById('myChart');
 
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: <?= json_encode($labels); ?>,
-                        datasets: [{
-                            label: 'Banyaknya Pelanggan',
-                            data: <?= json_encode($values); ?>,
-                            borderWidth: 2,
-                            borderColor: 'black',
-                            backgroundColor: 'pink'
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display:true,
-                                    text: 'Total Pelanggan'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Bulan'
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: <?= json_encode($labels); ?>,
+                            datasets: [{
+                                label: 'Banyaknya Pelanggan',
+                                data: <?= json_encode($values); ?>,
+                                borderWidth: 2,
+                                borderColor: 'black',
+                                backgroundColor: 'pink'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Total Pelanggan'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Bulan'
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
                 </script>
 
                 <!-- TABEL LAPORAN PELANGGAN -->
@@ -165,18 +173,19 @@ require 'views/admin/components/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($labels as $i => $label): ?>
-                        <tr>
-                            <td><?= $label ?></td>
-                            <td><?= $values[$i] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
+                        <?php foreach ($labels as $i => $label): ?>
+                            <tr>
+                                <td><?= $label ?></td>
+                                <td><?= $values[$i] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="tab-pane fade" id="pending" role="tabpanel">
+        <div class="tab-pane fade"
+            id="pending" role="tabpanel" aria-labelledby="pending-tab">
             <div class="alert alert-warning d-flex align-items-center" role="alert">
                 <i class="bi bi-info-circle-fill me-2"></i>
                 <div>Daftar cucian yang statusnya <b>belum diambil</b> atau <b>pending</b> lebih dari 3 hari. Segera hubungi pelanggan!</div>
@@ -194,16 +203,40 @@ require 'views/admin/components/header.php';
                             <th>Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <tr>
-                            <td>20 Okt 2023</td>
-                            <td>#ORD-005</td>
-                            <td>Siti Aminah</td>
-                            <td><a href="https://wa.me/628123456789" target="_blank" class="text-decoration-none">08123456789</a></td>
-                            <td><span class="badge bg-info">Selesai (Belum Diambil)</span></td>
-                            <td class="text-danger fw-bold">5 Hari</td>
-                            <td><a href="#" class="btn btn-sm btn-success"><i class="bi bi-whatsapp"></i> Ingatkan</a></td>
-                        </tr>
+                        <?php if (empty($dataPending)) : ?>
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">Tidak ada pesanan yang lewat 3 hari.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($dataPending as $row): ?>
+                                <tr>
+                                    <td><?= date('d M Y', strtotime($row['tanggal'])) ?></td>
+                                    <td>#ORD-<?= str_pad($row['id_pesanan'], 3, '0', STR_PAD_LEFT) ?></td>
+                                    <td><?= $row['nama_user'] ?></td>
+                                    <td>
+                                        <a href="https://wa.me/62<?= ltrim($row['no_telepon'], '0') ?>" target="_blank">
+                                            <?= $row['no_telepon'] ?>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">
+                                            <?= ucfirst($row['status']) ?>
+                                        </span>
+                                    </td>
+                                    <td class="text-danger fw-bold">
+                                        <?= $row['lama_hari'] ?> Hari
+                                    </td>
+                                    <td>
+                                        <a href="https://wa.me/62<?= ltrim($row['no_telepon'], '0') ?>"
+                                            class="btn btn-sm btn-success" target="_blank">
+                                            <i class="bi bi-whatsapp"></i> Ingatkan
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
