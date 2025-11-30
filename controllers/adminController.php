@@ -139,8 +139,10 @@ class adminController extends Controllers
             'values' => $values
         ]);
     }
+    
+    public function masterharga() 
+    {
+        $this->view('admin/masterharga');
+    }
 
-    // LAPORAN PENGHASILAN DAN PELANGGAN(EXPORT EXCELL)
-    
-    
 }
