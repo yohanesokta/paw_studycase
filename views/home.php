@@ -245,51 +245,51 @@ include 'header.php';
 
     <!-- LIST ASLI -->
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi1.jpg" class="testimonial-photo">
-                <h5>Budi Santoso</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>24-195_Yohannes</h5>
                 <p>"Pelayanan luar biasa! Pakaian selalu bersih dan wangi."</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi2.jpg" class="testimonial-photo">
-                <h5>Siti Nurhaliza</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>24-181_Rizki Pratama Sunarko</h5>
                 <p>"Cuci premium mereka benar-benar rapi dan wangi."</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi3.jpg" class="testimonial-photo">
-                <h5>Ahmad Wijaya</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>24-139_M Andri</h5>
                 <p>"Antar jemputnya cepat, stafnya ramah semua!"</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi4.jpg" class="testimonial-photo">
-                <h5>Nama Lain</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>24-200_Anas</h5>
                 <p>"Testimoni tambahan kamu masuk sini."</p>
             </div>
 
             <!-- DUPLIKASI (WAJIB SUPAYA TIDAK ADA GAP) -->
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi1.jpg" class="testimonial-photo">
-                <h5>Budi Santoso</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>24-160_Surya Maulana</h5>
                 <p>"Pelayanan luar biasa! Pakaian selalu bersih dan wangi."</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi2.jpg" class="testimonial-photo">
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
                 <h5>Siti Nurhaliza</h5>
                 <p>"Cuci premium mereka benar-benar rapi dan wangi."</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi3.jpg" class="testimonial-photo">
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
                 <h5>Ahmad Wijaya</h5>
                 <p>"Antar jemputnya cepat, stafnya ramah semua!"</p>
             </div>
 
             <div class="testimonial-card marquee-item">
-                <img src="./public/testi4.jpg" class="testimonial-photo">
-                <h5>Nama Lain</h5>
+                <img src="./public/blank-profile.webp" class="testimonial-photo">
+                <h5>Anas</h5>
                 <p>"Testimoni tambahan kamu masuk sini."</p>
             </div>
 
