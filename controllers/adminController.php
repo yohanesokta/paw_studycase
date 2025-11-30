@@ -13,7 +13,17 @@ class adminController extends Controllers
 
     public function dashboard()
     {
-        $this->view('admin/dashboard');
+        $orderMasuk      = $this->adminModels->countOrderMasuk();
+        $pendapatan      = $this->adminModels->totalPendapatan();
+        $verifikasi      = $this->adminModels->countPerluVerifikasi();
+        $belumSelesai    = $this->adminModels->countOrderBelumSelesai();
+
+        $this->view('admin/dashboard', [
+            'orderMasuk'   => $orderMasuk,
+            'pendapatan'   => $pendapatan,
+            'verifikasi'   => $verifikasi,
+            'belumSelesai' => $belumSelesai
+        ]);
     }
 
     public function pesanan()
@@ -131,12 +141,16 @@ class adminController extends Controllers
             $values[] = $r['total'];
         }
 
+        // ini untuk bagian tab order belum selesai
+        $pesananBelumDiambil = $this->adminModels->getOrderBelumSelesai();
+
         $this->view('admin/laporan', [
             'tahunList' => $tahunList,
             'tahunDipilih' => $tahunDipilih,
             'laporanBulanan' => $laporanBulanan,
             'labels' => $labels,
-            'values' => $values
+            'values' => $values,
+            'dataPending' => $pesananBelumDiambil
         ]);
     }
 
@@ -239,4 +253,5 @@ class adminController extends Controllers
     }
 
 }
+
 

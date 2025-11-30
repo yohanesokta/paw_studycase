@@ -113,6 +113,41 @@ class AdminModels
         return $stmt->execute();
     }
 
+    public function countOrderMasuk()
+    {
+        $sql = "SELECT COUNT(*) AS total FROM pesanan";
+        return $this->db->query($sql)->fetch_assoc()['total'];
+    }
+
+    public function totalPendapatan()
+    {
+        $sql = "SELECT SUM(harga) AS total 
+            FROM transaksi 
+            WHERE status = 'dibayar'";
+
+        return $this->db->query($sql)->fetch_assoc()['total'] ?? 0;
+    }
+
+    public function countPerluVerifikasi()
+    {
+        $sql = "SELECT COUNT(*) AS total 
+            FROM pesanan 
+            WHERE status = 'pending'";
+
+        return $this->db->query($sql)->fetch_assoc()['total'];
+    }
+
+    public function countOrderBelumSelesai()
+    {
+        $sql = "SELECT COUNT(*) AS total 
+            FROM pesanan
+            WHERE status IN ('belum_diambil', 'pending')
+            AND DATEDIFF(NOW(), tanggal) > 3";
+
+        return $this->db->query($sql)->fetch_assoc()['total'];
+    }
+
+
     // FORMAT TANGGAL PADA KOLOM TRANSAKSI DIUBAH JADI FORMAT TAHUN
     public function getTahunTransaksi()
     {
@@ -165,5 +200,31 @@ class AdminModels
         }
 
         return $data;
+    }
+
+    public function getOrderBelumSelesai()
+    {
+        $sql = "SELECT 
+                p.id AS id_pesanan,
+                p.tanggal,
+                p.status,
+                p.berat,
+                p.harga,
+                DATEDIFF(NOW(), p.tanggal) AS lama_hari,
+
+                u.nama AS nama_user,
+                u.no_telepon,
+                u.id AS id_user,
+
+                c.nama AS nama_cucian
+            FROM pesanan p
+            JOIN user u ON p.id_user = u.id
+            JOIN cucian c ON p.id_cucian = c.id
+            WHERE p.status IN ('belum_diambil', 'pending')
+            HAVING lama_hari > 3
+            ORDER BY p.tanggal ASC";
+
+        $result = $this->db->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
