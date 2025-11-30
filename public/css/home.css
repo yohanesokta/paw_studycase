@@ -761,10 +761,18 @@ footer {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
-  .hero-container,
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  
   .pickup-container {
     grid-template-columns: 1fr;
     gap: 40px;
+    display: flex;
+    flex-direction: column;
   }
 
   .hero h1 {
@@ -778,14 +786,16 @@ footer {
   .hero-content {
     padding-bottom: 40px;
     padding-right: 0;
+    order: 1;
   }
 
   .hero-image {
-    position: relative;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    order: -1;
+    position: relative !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    order: 2;
     justify-content: center;
   }
 
@@ -795,6 +805,10 @@ footer {
     object-position: bottom center;
   }
 
+  .pickup-left {
+    order: 1;
+  }
+
   .pickup-left h2 {
     font-size: 28px;
   }
@@ -802,7 +816,7 @@ footer {
   .pickup-right {
     position: relative;
     width: 100%;
-    order: -1;
+    order: 2;
     justify-content: center;
   }
 
@@ -816,6 +830,11 @@ footer {
   .hero {
     min-height: auto;
     padding: 40px 0 40px 0;
+  }
+  
+  .hero-container {
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .hero h1 {
@@ -833,14 +852,17 @@ footer {
 
   .hero-content {
     padding-bottom: 20px;
+    order: 1 !important;
   }
 
   .hero-image {
-    position: relative;
-    right: 0;
-    bottom: 0;
-    width: 100%;
+    position: relative !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: auto !important;
     margin-bottom: 20px;
+    order: 2 !important;
   }
 
   .hero-image img {
@@ -865,6 +887,15 @@ footer {
   .pickup-section {
     padding: 60px 0 40px 0;
   }
+  
+  .pickup-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .pickup-left {
+    order: 1 !important;
+  }
 
   .pickup-grid {
     grid-template-columns: 1fr;
@@ -873,6 +904,7 @@ footer {
   .pickup-right {
     position: relative;
     width: 100%;
+    order: 2 !important;
   }
 
   .pickup-right img {
@@ -893,6 +925,11 @@ footer {
   .hero {
     padding: 30px 0 30px 0;
   }
+  
+  .hero-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
 
   .hero h1 {
     font-size: 28px;
@@ -908,14 +945,17 @@ footer {
 
   .hero-content {
     padding-bottom: 15px;
+    order: 1 !important;
   }
 
   .hero-image {
-    position: relative;
-    right: 0;
-    bottom: 0;
-    width: 100%;
+    position: relative !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: auto !important;
     margin-bottom: 15px;
+    order: 2 !important;
   }
 
   .hero-image img {
@@ -944,6 +984,15 @@ footer {
   .pickup-section {
     padding: 40px 0 30px 0;
   }
+  
+  .pickup-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .pickup-left {
+    order: 1 !important;
+  }
 
   .pickup-form {
     padding: 20px;
@@ -956,10 +1005,12 @@ footer {
   .pickup-right {
     position: relative;
     width: 100%;
+    order: 2 !important;
   }
 
   .pickup-right img {
     max-width: 300px;
     width: 100%;
+    object-position: bottom center;
   }
 }
