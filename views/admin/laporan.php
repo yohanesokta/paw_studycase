@@ -21,18 +21,42 @@ require 'views/admin/components/header.php';
 
     <div class="tab-content" id="reportTabContent">
         
-        <div class="tab-pane fade show active" id="uang" role="tabpanel">
+        <!-- MEMANGGIL FILE CSS KHUSUS PRINT AREA     -->
+        <link rel="stylesheet" href="../public/css/print.css">
+
+        <!-- AREA YANG AKAN DI PRINT/CETAK -->
+        <div id="print-area" class="tab-pane fade show active" id="uang" role="tabpanel">
             <div class="card table-card mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title fw-bold">Pemasukan Bulanan</h5>
+
                     <div class="d-flex gap-2">
-                        <select class="form-select form-select-sm" style="width: 120px;">
-                            <option>Tahun 2023</option>
-                            <option>Tahun 2022</option>
-                        </select>
-                        <button class="btn btn-sm btn-success"><i class="bi bi-file-earmark-excel"></i> Export Excel</button>
+                        <!-- FILTER TAHUN -->
+                        <form method="GET" action="" class="d-flex gap-2">
+                            <select name="tahun" class="form-select form-select-sm" style="width: 120px;"
+                                    onchange="this.form.submit()">
+                                <?php foreach ($tahunList as $th): ?>
+                                    <option value="<?= $th ?>" <?= $th == $tahunDipilih ? 'selected' : '' ?>>
+                                        Tahun <?= $th ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </form>
+
+                        <!-- CETAK HALAMAN -->
+                        <button onclick="window.print()" style="background-color: orange;">
+                            Cetak Halaman
+                        </button>
+
+                        <!-- EXPORT EXCEL -->
+                        <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
+                        class="btn btn-sm btn-success">
+                            <i class="bi bi-file-earmark-excel"></i> Export Excel
+                        </a>
                     </div>
                 </div>
+
+                <!-- TABLE -->
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
@@ -44,30 +68,110 @@ require 'views/admin/components/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Oktober</td>
-                            <td>150</td>
-                            <td>Rp 10.000.000</td>
-                            <td class="text-danger">Rp 500.000</td>
-                            <td class="fw-bold">Rp 10.500.000</td>
-                        </tr>
-                        <tr>
-                            <td>September</td>
-                            <td>120</td>
-                            <td>Rp 8.000.000</td>
-                            <td class="text-danger">Rp 0</td>
-                            <td class="fw-bold">Rp 8.000.000</td>
-                        </tr>
+                        <?php 
+                        $total_trans = 0;
+                        $total_terbayar = 0;
+                        $total_piutang = 0;
+                        $total_omset = 0;
+                        ?>
+
+                        <?php foreach ($laporanBulanan as $row): ?>
+                            <?php
+                            $total_trans += $row['jumlah_transaksi'];
+                            $total_terbayar += $row['terbayar'];
+                            $total_piutang += $row['piutang'];
+                            $total_omset += $row['total_omset'];
+                            ?>
+                            <tr>
+                                <td><?= $row['bulan'] ?></td>
+                                <td><?= $row['jumlah_transaksi'] ?></td>
+
+                                <td>Rp <?= number_format($row['terbayar'], 0, ',', '.') ?></td>
+
+                                <td class="<?= $row['piutang'] > 0 ? 'text-danger' : '' ?>">
+                                    Rp <?= number_format($row['piutang'], 0, ',', '.') ?>
+                                </td>
+
+                                <td class="fw-bold">
+                                    Rp <?= number_format($row['total_omset'], 0, ',', '.') ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
+
                     <tfoot class="table-light fw-bold">
                         <tr>
                             <td>TOTAL TAHUN INI</td>
-                            <td>270</td>
-                            <td>Rp 18.000.000</td>
-                            <td>Rp 500.000</td>
-                            <td>Rp 18.500.000</td>
+                            <td><?= $total_trans ?></td>
+                            <td>Rp <?= number_format($total_terbayar, 0, ',', '.') ?></td>
+                            <td>Rp <?= number_format($total_piutang, 0, ',', '.') ?></td>
+                            <td>Rp <?= number_format($total_omset, 0, ',', '.') ?></td>
                         </tr>
                     </tfoot>
+                </table>
+
+                <!-- DIAGRAM LAPORAN PELANGGAN -->
+                <h5 class="card-title fw-bold">Diagram Laporan Pelanggan</h5>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <div class="diagram">
+                    <div style="width: 60%; margin-top:20px;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+
+                <script>
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: <?= json_encode($labels); ?>,
+                        datasets: [{
+                            label: 'Banyaknya Pelanggan',
+                            data: <?= json_encode($values); ?>,
+                            borderWidth: 2,
+                            borderColor: 'black',
+                            backgroundColor: 'pink'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display:true,
+                                    text: 'Total Pelanggan'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Bulan'
+                                }
+                            }
+                        }
+                    }
+                });
+                </script>
+
+                <!-- TABEL LAPORAN PELANGGAN -->
+
+                <h5 class="card-title fw-bold">Tabel Laporan Pelanggan</h5>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Bulan</th>
+                            <th>Jumlah Pelanggan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($labels as $i => $label): ?>
+                        <tr>
+                            <td><?= $label ?></td>
+                            <td><?= $values[$i] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div>
         </div>

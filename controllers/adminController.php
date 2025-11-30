@@ -61,34 +61,12 @@ class adminController extends Controllers
         Redirect("/admin/pesanan");
     }
 
-// Pelanggan methods
+    // Pelanggan methods
 
     public function pelanggan()
     {
         $data = $this->adminModels->getPelanggan();
         $this->view('admin/pelanggan', ['data' => $data]);
-    }
-
-    public function tambahPelanggan()
-    {
-        $nama   = $_POST['nama'] ?? null;
-        $email  = $_POST['email'] ?? null;
-        $telp   = $_POST['no_telepon'] ?? null;
-        $alamat = $_POST['alamat'] ?? null;
-
-        if (!$nama || !$email || !$telp || !$alamat) {
-            die("Empty Parameters Error 402");
-        }
-
-        $this->adminModels->addPelanggan($nama, $email, $telp, $alamat);
-
-        // ---- FLASH MESSAGE ----
-        $_SESSION['flash'] = [
-            'type' => 'success',
-            'message' => 'Pelanggan berhasil ditambahkan!'
-        ];
-
-        Redirect("/admin/pelanggan");
     }
 
     public function updatePelanggan()
@@ -131,12 +109,40 @@ class adminController extends Controllers
         Redirect("/admin/pelanggan");
     }
 
+    // LAPORAN PENGHASILAN & PELANGGAN
     public function laporan()
     {
-        $this->view('admin/laporan');
+        $tahunDipilih = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
+
+        // DAFTAR TAHUN
+        $tahunList = $this->adminModels->getTahunTransaksi();
+
+        // LAPORAN PENGHASILAN (TABEL)
+        $laporanBulanan = $this->adminModels->getLaporanBulananByTahun($tahunDipilih);
+
+        // LAPORAN PELANGGAN (DIAGRAM)
+        $rows = $this->adminModels->getLaporanHarianByTahun($tahunDipilih);
+
+        $labels = [];
+        $values = [];
+
+        foreach ($rows as $r) {
+            $labels[] = $r['bulan'];
+            $values[] = $r['total'];
+        }
+
+        $this->view('admin/laporan', [
+            'tahunList' => $tahunList,
+            'tahunDipilih' => $tahunDipilih,
+            'laporanBulanan' => $laporanBulanan,
+            'labels' => $labels,
+            'values' => $values
+        ]);
     }
-     public function masterharga() {
-        $this->view('admin/harga');
+    
+    public function masterharga() 
+    {
+        $this->view('admin/masterharga');
     }
 
 }

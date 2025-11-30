@@ -89,22 +89,10 @@ class AdminModels
                 FROM user WHERE id=?";
 
         $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("s", $id);
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc();
-    }
-
-    public function addPelanggan($nama, $email, $telp, $alamat)
-    {
-        $role = "pelanggan";
-        $SQL = "INSERT INTO user (nama, email, no_telepon, alamat, role)
-                VALUES (?, ?, ?, ?, ?)";
-
-        $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("sssss", $nama, $email, $telp, $alamat, $role);
-
-        return $stmt->execute();
     }
 
     public function updatePelanggan($id, $nama, $email, $telp, $alamat)
@@ -112,9 +100,8 @@ class AdminModels
         $SQL = "UPDATE user 
                 SET nama=?, email=?, no_telepon=?, alamat=? 
                 WHERE id=?";
-
         $stmt = $this->db->prepare($SQL);
-        $stmt->bind_param("ssssi", $nama, $email, $telp, $alamat, $id);
+        $stmt->bind_param("sssss", $nama, $email, $telp, $alamat, $id);
         return $stmt->execute();
     }
 
@@ -124,5 +111,59 @@ class AdminModels
         $stmt = $this->db->prepare($SQL);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+    // FORMAT TANGGAL PADA KOLOM TRANSAKSI DIUBAH JADI FORMAT TAHUN
+    public function getTahunTransaksi()
+    {
+        $sql = "SELECT DISTINCT YEAR(tanggal) AS tahun
+                FROM transaksi
+                ORDER BY tahun DESC";
+
+        $result = $this->db->query($sql);
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row['tahun'];
+        }
+        return $data;
+    }
+
+    // LAPORAN PENGHASILAN UNTUK TABEL
+    public function getLaporanBulananByTahun($tahun)
+    {
+        $sql = "SELECT 
+                    DATE_FORMAT(tanggal, '%M') AS bulan,
+                    COUNT(id_user) AS jumlah_transaksi,
+                    SUM(CASE WHEN status='dibayar' THEN harga ELSE 0 END) AS terbayar,
+                    SUM(CASE WHEN status='belum_dibayar' THEN harga ELSE 0 END) AS piutang,
+                    SUM(harga) AS total_omset
+                FROM transaksi
+                WHERE YEAR(tanggal) = '$tahun'
+                GROUP BY MONTH(tanggal)
+                ORDER BY MONTH(tanggal) ASC";
+
+        $result = $this->db->query($sql);
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // LAPORAN PELANGGAN UNTUK DIAGRAM
+    public function getLaporanHarianByTahun($tahun)
+    {
+        $sql = "SELECT 
+        DATE_FORMAT(tanggal, '%M') AS bulan, COUNT(id_user) AS total 
+        FROM transaksi WHERE YEAR(tanggal) = '$tahun' 
+        GROUP BY tanggal 
+        ORDER BY tanggal ASC";
+
+        $result = $this->db->query($sql);
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        return $data;
     }
 }
