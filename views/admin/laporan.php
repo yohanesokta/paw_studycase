@@ -21,7 +21,11 @@ require 'views/admin/components/header.php';
 
     <div class="tab-content" id="reportTabContent">
         
-        <div class="tab-pane fade show active" id="uang" role="tabpanel">
+        <!-- MEMANGGIL FILE CSS KHUSUS PRINT AREA     -->
+        <link rel="stylesheet" href="../public/css/print.css">
+
+        <!-- AREA YANG AKAN DI PRINT/CETAK -->
+        <div id="print-area" class="tab-pane fade show active" id="uang" role="tabpanel">
             <div class="card table-card mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title fw-bold">Pemasukan Bulanan</h5>
@@ -40,7 +44,7 @@ require 'views/admin/components/header.php';
                         </form>
 
                         <!-- CETAK HALAMAN -->
-                        <button onclick="window.print()">
+                        <button onclick="window.print()" style="background-color: orange;">
                             Cetak Halaman
                         </button>
 
@@ -106,8 +110,8 @@ require 'views/admin/components/header.php';
                     </tfoot>
                 </table>
 
-                <!-- DIAGRAM LAPORAN -->
-                <h5 class="card-title fw-bold">Laporan Pelanggan</h5>
+                <!-- DIAGRAM LAPORAN PELANGGAN -->
+                <h5 class="card-title fw-bold">Diagram Laporan Pelanggan</h5>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <div class="diagram">
                     <div style="width: 60%; margin-top:20px;">
@@ -149,6 +153,26 @@ require 'views/admin/components/header.php';
                     }
                 });
                 </script>
+
+                <!-- TABEL LAPORAN PELANGGAN -->
+
+                <h5 class="card-title fw-bold">Tabel Laporan Pelanggan</h5>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Bulan</th>
+                            <th>Jumlah Pelanggan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($labels as $i => $label): ?>
+                        <tr>
+                            <td><?= $label ?></td>
+                            <td><?= $values[$i] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 

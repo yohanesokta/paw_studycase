@@ -126,6 +126,7 @@ class AdminModels
         return $stmt->execute();
     }
 
+    // FORMAT TANGGAL PADA KOLOM TRANSAKSI DIUBAH JADI FORMAT TAHUN
     public function getTahunTransaksi()
     {
         $sql = "SELECT DISTINCT YEAR(tanggal) AS tahun
@@ -141,6 +142,7 @@ class AdminModels
         return $data;
     }
 
+    // LAPORAN PENGHASILAN UNTUK TABEL
     public function getLaporanBulananByTahun($tahun)
     {
         $sql = "SELECT 
@@ -159,13 +161,14 @@ class AdminModels
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // LAPORAN PELANGGAN UNTUK DIAGRAM
     public function getLaporanHarianByTahun($tahun)
     {
         $sql = "SELECT 
         DATE_FORMAT(tanggal, '%M') AS bulan, COUNT(id_user) AS total 
-        FROM transaksi WHERE YEAR(tanggal) = '2025' 
+        FROM transaksi WHERE YEAR(tanggal) = '$tahun' 
         GROUP BY tanggal 
-        ORDER BY tanggal ASC;";
+        ORDER BY tanggal ASC";
 
         $result = $this->db->query($sql);
 

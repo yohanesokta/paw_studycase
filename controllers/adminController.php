@@ -131,18 +131,18 @@ class adminController extends Controllers
         Redirect("/admin/pelanggan");
     }
 
-    // LAPORAN PELANGGAN
+    // LAPORAN PENGHASILAN & PELANGGAN
     public function laporan()
     {
         $tahunDipilih = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
 
-        // daftar tahun
+        // DAFTAR TAHUN
         $tahunList = $this->adminModels->getTahunTransaksi();
 
-        // laporan bulanan
+        // LAPORAN PENGHASILAN (TABEL)
         $laporanBulanan = $this->adminModels->getLaporanBulananByTahun($tahunDipilih);
 
-        // laporan harian (grafik)
+        // LAPORAN PELANGGAN (DIAGRAM)
         $rows = $this->adminModels->getLaporanHarianByTahun($tahunDipilih);
 
         $labels = [];
@@ -161,8 +161,6 @@ class adminController extends Controllers
             'values' => $values
         ]);
     }
-
-
 
     public function masterharga() {
         $this->view('admin/masterharga');
