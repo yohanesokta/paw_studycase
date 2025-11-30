@@ -140,5 +140,7 @@ class adminController extends Controllers
         ]);
     }
 
+    // LAPORAN PENGHASILAN DAN PELANGGAN(EXPORT EXCELL)
+    
     
 }

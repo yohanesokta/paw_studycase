@@ -25,7 +25,7 @@ require 'views/admin/components/header.php';
         <link rel="stylesheet" href="../public/css/print.css">
 
         <!-- AREA YANG AKAN DI PRINT/CETAK -->
-        <div id="print-area" class="tab-pane fade show active" id="uang" role="tabpanel">
+        <div class="tab-pane fade show active print-area" id="uang" role="tabpanel">
             <div class="card table-card mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title fw-bold">Pemasukan Bulanan</h5>
