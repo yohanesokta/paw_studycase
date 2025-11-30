@@ -139,6 +139,99 @@ class adminController extends Controllers
             'values' => $values
         ]);
     }
+
+    public function exportExcel()
+    {
+        $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
+
+        // MEMANGGIL MODEL YANG DIPERLUKAN
+        $laporanBulanan = $this->adminModels->getLaporanBulananByTahun($tahun);
+        $laporanHarian = $this->adminModels->getLaporanHarianByTahun($tahun);
+
+        header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachment; filename=laporan_$tahun.xls");
+
+        // TABEL PEMASUKAN BULAN
+        $total_trans = $total_terbayar = $total_piutang = $total_omset = 0;
+
+        echo "<h3>Pemasukan Bulanan Tahun $tahun</h3>";
+        echo "<table border='1'>";
+        echo "<thead>
+                <tr>
+                    <th>Bulan</th>
+                    <th>Jml Transaksi</th>
+                    <th>Terbayar</th>
+                    <th>Belum Dibayar (Piutang)</th>
+                    <th>Total Omset</th>
+                </tr>
+            </thead>";
+        echo "<tbody>";
+
+        foreach ($laporanBulanan as $row) {
+            $total_trans += $row['jumlah_transaksi'];
+            $total_terbayar += $row['terbayar'];
+            $total_piutang += $row['piutang'];
+            $total_omset += $row['total_omset'];
+
+            echo "<tr>
+                    <td>{$row['bulan']}</td>
+                    <td>{$row['jumlah_transaksi']}</td>
+                    <td>Rp " . number_format($row['terbayar'],0,',','.') . "</td>
+                    <td>Rp " . number_format($row['piutang'],0,',','.') . "</td>
+                    <td>Rp " . number_format($row['total_omset'],0,',','.') . "</td>
+                </tr>";
+        }
+
+        echo "</tbody>";
+        echo "<tfoot>
+                <tr>
+                    <td>TOTAL TAHUN INI</td>
+                    <td>$total_trans</td>
+                    <td>Rp " . number_format($total_terbayar,0,',','.') . "</td>
+                    <td>Rp " . number_format($total_piutang,0,',','.') . "</td>
+                    <td>Rp " . number_format($total_omset,0,',','.') . "</td>
+                </tr>
+            </tfoot>";
+        echo "</table><br><br>";
+
+        // TABEL LAPORAN PELANGGAN
+        $laporanPelangganPerBulan = [];
+        foreach ($laporanHarian as $row) {
+            $bulan = $row['bulan'];
+            if (!isset($laporanPelangganPerBulan[$bulan])) {
+                $laporanPelangganPerBulan[$bulan] = 0;
+            }
+            $laporanPelangganPerBulan[$bulan] += $row['total'];
+        }
+
+        $labels = array_keys($laporanPelangganPerBulan);
+        $values = array_values($laporanPelangganPerBulan);
+
+        echo "<h3>Tabel Laporan Pelanggan Tahun $tahun</h3>";
+        echo "<table border='1'>";
+        echo "<thead>
+                <tr>
+                    <th>Bulan</th>
+                    <th>Jumlah Pelanggan</th>
+                </tr>
+            </thead>";
+        echo "<tbody>";
+
+        foreach ($labels as $i => $label) {
+            $value = $values[$i];
+            echo "<tr>
+                    <td>$label</td>
+                    <td>$value</td>
+                </tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+
+        exit;
+    }
+
+
     
     public function masterharga() 
     {
