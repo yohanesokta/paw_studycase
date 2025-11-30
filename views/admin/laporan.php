@@ -49,10 +49,10 @@ require 'views/admin/components/header.php';
                         </button>
 
                         <!-- EXPORT EXCEL -->
-                        <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
+                        <!-- <a href="/admin/laporan/export?tahun=<?= $tahunDipilih ?>"
                         class="btn btn-sm btn-success">
                             <i class="bi bi-file-earmark-excel"></i> Export Excel
-                        </a>
+                        </a> -->
                     </div>
                 </div>
 
