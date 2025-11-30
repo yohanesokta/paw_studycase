@@ -112,4 +112,58 @@ class AdminModels
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    // FORMAT TANGGAL PADA KOLOM TRANSAKSI DIUBAH JADI FORMAT TAHUN
+    public function getTahunTransaksi()
+    {
+        $sql = "SELECT DISTINCT YEAR(tanggal) AS tahun
+                FROM transaksi
+                ORDER BY tahun DESC";
+
+        $result = $this->db->query($sql);
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row['tahun'];
+        }
+        return $data;
+    }
+
+    // LAPORAN PENGHASILAN UNTUK TABEL
+    public function getLaporanBulananByTahun($tahun)
+    {
+        $sql = "SELECT 
+                    DATE_FORMAT(tanggal, '%M') AS bulan,
+                    COUNT(id_user) AS jumlah_transaksi,
+                    SUM(CASE WHEN status='dibayar' THEN harga ELSE 0 END) AS terbayar,
+                    SUM(CASE WHEN status='belum_dibayar' THEN harga ELSE 0 END) AS piutang,
+                    SUM(harga) AS total_omset
+                FROM transaksi
+                WHERE YEAR(tanggal) = '$tahun'
+                GROUP BY MONTH(tanggal)
+                ORDER BY MONTH(tanggal) ASC";
+
+        $result = $this->db->query($sql);
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // LAPORAN PELANGGAN UNTUK DIAGRAM
+    public function getLaporanHarianByTahun($tahun)
+    {
+        $sql = "SELECT 
+        DATE_FORMAT(tanggal, '%M') AS bulan, COUNT(id_user) AS total 
+        FROM transaksi WHERE YEAR(tanggal) = '$tahun' 
+        GROUP BY tanggal 
+        ORDER BY tanggal ASC";
+
+        $result = $this->db->query($sql);
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        return $data;
+    }
 }
