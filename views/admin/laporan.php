@@ -136,13 +136,13 @@ require 'views/admin/components/header.php';
                                 beginAtZero: true,
                                 title: {
                                     display:true,
-                                    text: 'Total'
+                                    text: 'Total Pelanggan'
                                 }
                             },
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Tanggal Transaksi'
+                                    text: 'Bulan'
                                 }
                             }
                         }

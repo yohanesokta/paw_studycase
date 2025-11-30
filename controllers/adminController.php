@@ -149,7 +149,7 @@ class adminController extends Controllers
         $values = [];
 
         foreach ($rows as $r) {
-            $labels[] = $r['tanggal'];
+            $labels[] = $r['bulan'];
             $values[] = $r['total'];
         }
 

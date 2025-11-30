@@ -161,11 +161,11 @@ class AdminModels
 
     public function getLaporanHarianByTahun($tahun)
     {
-        $sql = "SELECT tanggal, COUNT(id_user) AS total
-                FROM transaksi
-                WHERE YEAR(tanggal) = '$tahun'
-                GROUP BY tanggal
-                ORDER BY tanggal ASC";
+        $sql = "SELECT 
+        DATE_FORMAT(tanggal, '%M') AS bulan, COUNT(id_user) AS total 
+        FROM transaksi WHERE YEAR(tanggal) = '2025' 
+        GROUP BY tanggal 
+        ORDER BY tanggal ASC;";
 
         $result = $this->db->query($sql);
 
