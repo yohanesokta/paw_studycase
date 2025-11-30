@@ -33,7 +33,7 @@ $Route->POST("/admin/pelanggan/hapus","adminController@hapusPelanggan","admin");
 $Route->GET("/admin/pelanggan/edit","adminController@editPelanggan","admin");
 $Route->POST("/admin/pelanggan/update","adminController@updatePelanggan","admin");
 $Route->GET("/admin/laporan","adminController@laporan", "admin");
-$Route->GET("/admin/harga","adminController@harga", "admin");
+$Route->GET("/admin/masterharga","adminController@masterharga", "admin");
 
 $Route->GET("/user/dashboard", "userController@index", "pelanggan");
 $Route->POST("/user/pesanan", "userController@pesanan", "pelanggan");
