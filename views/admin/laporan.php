@@ -54,7 +54,7 @@ require 'views/admin/components/header.php';
                         </form>
 
                         <!-- CETAK HALAMAN -->
-                        <button onclick="window.print()" style="background-color: orange;">
+                        <button onclick="window.print()" class="btn btn-sm btn-warning">
                             Cetak Halaman
                         </button>
 
@@ -122,7 +122,7 @@ require 'views/admin/components/header.php';
                 <h5 class="card-title fw-bold">Diagram Laporan Pelanggan</h5>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <div class="diagram">
-                    <div style="width: 60%; margin-top:20px;">
+                    <div style="width: 100%; margin-top:20px;">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
