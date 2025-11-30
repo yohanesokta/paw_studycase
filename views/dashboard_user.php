@@ -87,7 +87,7 @@
 
     <section class="py-4 bg-white shadow-sm mb-4">
         <div class="container">
-            <h2>Halo, Pelanggan Setia!</h2>
+            <h2>Halo, <?=  $_SESSION['userdata']['nama']?></h2>
             <p class="text-muted">Silakan buat pesanan baru. Data diri Anda sudah kami simpan.</p>
         </div>
     </section>

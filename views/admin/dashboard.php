@@ -47,25 +47,4 @@ require 'views/admin/components/header.php';
         </div>
     </div>
 </div>
-
-<div class="card table-card mt-4">
-    <h5 class="card-title mb-3">Order Terbaru</h5>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Pelanggan</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>#ORD001</td>
-                <td>Budi Santoso</td>
-                <td><span class="badge bg-warning text-dark">Pending</span></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
 <?php require 'components/footer.php'; ?>
