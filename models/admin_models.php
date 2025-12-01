@@ -79,7 +79,40 @@ class AdminModels
             die($e->getMessage());
         }
     }
+        public function getcucian($id = null)
+    {
+        $SELECT = ($id) ? " WHERE c.id='$id';" : ";";
+        $SQL = "SELECT 
+                id AS id_cucian,
+                nama AS nama_cucian,
+                harga AS harga_perkg,
+                estimate
 
+                FROM cucian". $SELECT;
+        $result = $this->db->query($SQL);
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    }
+    public function updatecucian( $id, $nama, $harga, $estimate) {
+        try {
+        $SQL = "UPDATE cucian SET nama=?, harga=?, estimate=? WHERE id=?";
+        $SQL = $this->db->prepare($SQL);
+        $SQL->bind_param("siii", $nama,$harga, $estimate,$id);
+        $SQL->execute();
+        }  catch (Exception $e) { 
+            die($e->getMessage());
+        }
+    }
+    public function saveNewCucian( $nama, $harga, $estimate) {
+        try {
+            $SQL = "INSERT INTO cucian (nama, harga, estimate) VALUES (?, ?, ?)";
+            $SQL = $this->db->prepare($SQL);
+            $SQL->bind_param("sii", $nama, $harga, $estimate); 
+            $SQL->execute();
+        }  catch (Exception $e) { 
+            die($e->getMessage());
+        }
+    }
 
     /* ------------------ PELANGGAN ------------------ */
 
