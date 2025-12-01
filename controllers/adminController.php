@@ -244,9 +244,34 @@ class adminController extends Controllers
 
         exit;
     }
-    public function masterharga() 
-    {
-        $this->view('admin/masterharga');
+    public function masterharga() {
+        $data = $this->adminModels->getcucian();
+        $this->view('admin/masterharga' ,['data'=> $data]);
     }
+   public function addcucianProcess() { 
+        $nama = $_POST['nama'] ?? '';
+        $harga = $_POST['harga'] ?? '';
+        $estimate = $_POST['estimate'] ?? '';
+        
+        if (empty($nama) || empty($harga) || empty($estimate)) { 
+            die('Empty Paramaters Error 402');
+        }
+        $this->adminModels->saveNewCucian($nama, $harga, $estimate);
+        $_SESSION['success_message'] = "Layanan $nama berhasil ditambahkan!";
+        
+        Redirect("/admin/masterharga");
+    }
+    public function updatecucian() { 
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $harga = $_POST['harga']; 
+        $estimate = $_POST['estimate']; 
+        if (empty($nama) || empty($id) || empty($harga) || empty($estimate)) { 
+            die('Empty Paramaters Error 402');
+        }
+        $this->adminModels->updatecucian($id,$nama,$harga,$estimate);
+        Redirect("/admin/masterharga");
+    }
+
 
 }
