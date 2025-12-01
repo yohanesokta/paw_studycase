@@ -7,7 +7,7 @@
     <title>Dashboard User - Fresh Laundry</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/home.css">
+    <link rel="stylesheet" href="<?= URL('/public/css/home.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -55,7 +55,7 @@
                                 <img src="<?= $_SESSION['userdata']['profile'] ?>"
                                     class="avatar-img me-2" alt="Profile Picture" style="width: 35px; height: 35px;">
                             <?php else : ?>
-                                <div class="avatar-profile me-2"><?=  $_SESSION['userdata']['nama'][0]; ?></div>
+                                <div class="avatar-profile me-2"><?= $_SESSION['userdata']['nama'][0]; ?></div>
                             <?php endif; ?>
 
                             <!-- Nama user -->
@@ -87,7 +87,7 @@
 
     <section class="py-4 bg-white shadow-sm mb-4">
         <div class="container">
-            <h2>Halo, <?=  $_SESSION['userdata']['nama']?></h2>
+            <h2>Halo, <?= $_SESSION['userdata']['nama'] ?></h2>
             <p class="text-muted">Silakan buat pesanan baru. Data diri Anda sudah kami simpan.</p>
         </div>
     </section>
