@@ -12,7 +12,7 @@
             <i class="bi bi-basket-fill me-2"></i> Manajemen Order
         </a>
         
-        <a href="<?=URL("/admin/harga")?>" class="nav-link <?= ($currentPage == 'master') ? 'active' : '' ?>">
+        <a href="<?=URL("/admin/masterharga")?>" class="nav-link <?= ($currentPage == 'master') ? 'active' : '' ?>">
             <i class="bi bi-tags-fill me-2"></i> Master Harga
         </a>
         
