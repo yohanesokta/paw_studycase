@@ -287,7 +287,7 @@ include 'header.php';
         Jam Penjemputan: ${jam}
         Mohon konfirmasinya ya Kak `;
 
-        const url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(pesan);
+        const url = "https://wa.me/6285708350575" + admin + "?text=" + encodeURIComponent(pesan);
 
         window.open(url, "_blank");
     }
