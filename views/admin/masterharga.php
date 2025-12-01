@@ -37,43 +37,43 @@ require 'views/admin/components/header.php';
                     <table class="table table-hover align-middle table-striped">
                         <thead class="table-light">
                             <tr>
-                                <th width="5%">No</th>
-                                <th width="35%">Jenis Layanan (Kode)</th>
-                                <th width="25%">Harga Dasar</th>
-                                <th width="20%">Estimasi Selesai</th>
+                                <th width="5%">id_cucian</th>
+                                <th width="35%">nama_cucian</th>
+                                <th width="25%">harga_perkg</th>
+                                <th width="20%">estimate</th>
                                 <th width="15%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             $no = 1;
-                            if (isset($data['layanan']) && count($data['layanan']) > 0) {
-                                foreach ($data['layanan'] as $row) : 
+                            if (isset($data) && count($data) > 0) {
+                                foreach ($data as $row) : 
                             ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
                                     <td>
-                                        <span class="fw-bold text-dark"><?= $row['nama']; ?></span>
+                                        <span class="fw-bold text-dark"><?= $row['nama_cucian']; ?></span>
                                     </td>
                                     <td class="fw-bold text-success">
-                                        Rp <?= number_format($row['harga'], 0, ',', '.'); ?> <small class="text-muted text-dark fw-normal">/kg</small>
+                                        Rp <?= number_format($row['harga_perkg'], 0, ',', '.'); ?> <small class="text-muted text-dark fw-normal">/kg</small>
                                     </td>
                                     <td>
                                         <i class="bi bi-clock me-1 text-muted"></i> <?= $row['estimate']; ?> Hari
                                     </td>
                                     <td>
                                         <button class="btn btn-sm btn-warning text-white btn-edit" 
-                                            data-id="<?= $row['id']; ?>"
-                                            data-nama="<?= $row['nama']; ?>"
-                                            data-harga="<?= $row['harga']; ?>"
+                                            data-id="<?= $row['id_cucian']; ?>"
+                                            data-nama="<?= $row['nama_cucian']; ?>"
+                                            data-harga="<?= $row['harga_perkg']; ?>"
                                             data-estimate="<?= $row['estimate']; ?>"
                                             data-bs-toggle="modal" data-bs-target="#modalEdit">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                         
-                                        <a href="<?= URL('/admin/hapus_layanan/' . $row['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?');">
+                                        <!-- <a href="<?= URL('/admin/hapus_layanan/' . $row['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?');">
                                             <i class="bi bi-trash"></i>
-                                        </a>
+                                        </a> -->
                                     </td>
                                 </tr>
                             <?php 
@@ -102,14 +102,14 @@ require 'views/admin/components/header.php';
                 <h5 class="modal-title fw-bold">Tambah Jenis Layanan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="<?= URL('/admin/tambah_layanan') ?>" method="POST">
+            <form action="<?= URL('/admin/masterharga/tambah/process') ?>" method="POST">
                 <div class="modal-body">
                     <div class="alert alert-info py-2 small mb-3">
-                        <i class="bi bi-info-circle me-1"></i> Masukkan jenis seperti CK, CB, CKS.
+                        <i class="bi bi-info-circle me-1"></i> Masukkan jenis seperti Cuci Komplit, Cuci Basah, dsb.
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-bold">Nama / Kode Jenis</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Contoh: Cuci Komplit (CK)" required>
+                        <label class="form-label small fw-bold">Nama Cucian</label>
+                        <input type="text" name="nama" class="form-control" placeholder="Contoh: Cuci Komplit" required>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
