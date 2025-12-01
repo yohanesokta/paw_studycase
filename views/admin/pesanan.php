@@ -58,14 +58,6 @@ require 'views/admin/components/header.php';
         }
         ?>
 
-        <div class="stat-card pending">
-            <div class="icon">
-                <i class="bi bi-hourglass-split"></i>
-            </div>
-            <div class="value"><?= $belumVerif ?></div>
-            <div class="label">Belum Verifikasi</div>
-        </div>
-
         <div class="stat-card process">
             <div class="icon">
                 <i class="bi bi-gear-fill"></i>

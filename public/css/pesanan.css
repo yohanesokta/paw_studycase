@@ -73,9 +73,16 @@
     /* Stats Cards */
     .stats-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
         gap: 1rem;
         margin-bottom: 2rem;
+        justify-content: start;
+    }
+
+    @media (max-width: 768px) {
+        .stats-container {
+            grid-template-columns: 1fr;
+        }
     }
 
     .stat-card {
@@ -103,7 +110,7 @@
     }
 
     .stat-card.pending .icon {
-        background: linear-gradient(135deg, #ffc107, #ff9800);
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
         color: white;
     }
 
@@ -124,9 +131,15 @@
     }
 
     .stat-card .label {
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: #6c757d;
         font-weight: 500;
+        line-height: 1.3;
+        min-height: 2.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     /* Table Card */
@@ -343,8 +356,8 @@
     }
 
     .status-pending {
-        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
-        color: #000;
+        background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        color: white;
     }
 
     .status-ready {
