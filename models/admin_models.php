@@ -36,7 +36,7 @@ class AdminModels
                 FROM pesanan p
                 JOIN user u ON p.id_user = u.id
                 JOIN cucian c ON p.id_cucian = c.id
-                JOIN transaksi t ON p.id = t.id_pesanan
+                LEFT JOIN transaksi t ON p.id = t.id_pesanan
                 $SELECT";
 
         $result = $this->db->query($SQL);
