@@ -1,5 +1,6 @@
 <?php
-require_once  "lib/routes.php";
+require_once './lib/routes.php';
+require_once './routes/routes.php';   
 $Route = new Routes();
 
 $Route->GET("/", "MainController@index");
@@ -28,7 +29,12 @@ $Route->POST('/admin/pesanan/update','adminController@updatePesanan','admin');
 
 $Route->GET("/admin/harga","adminController@harga","admin");
 $Route->GET("/admin/pelanggan","adminController@pelanggan", "admin");
+$Route->POST("/admin/pelanggan/hapus","adminController@hapusPelanggan","admin");
+$Route->GET("/admin/pelanggan/edit","adminController@editPelanggan","admin");
+$Route->POST("/admin/pelanggan/update","adminController@updatePelanggan","admin");
 $Route->GET("/admin/laporan","adminController@laporan", "admin");
+$Route->GET('/admin/laporan/export', 'adminController@exportExcel', "admin");
+$Route->GET("/admin/harga","adminController@harga", "admin");
 
 $Route->GET("/admin/masterharga","adminController@masterharga", "admin");
 
@@ -39,6 +45,8 @@ $Route->POST('/user/update-profile-process', 'userController@updateProfileProces
 // $Route->POST('/auth/register/process', 'authController@registerProcess');
 
 $Route->GET("/logout","authController@logout");
+$Route->GET("/cek","authController@cek");
 
 
 $Route->JalankanRouting();
+

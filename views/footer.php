@@ -37,28 +37,27 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 24-181_Rizki, 24-095_Yohannes, 24-139_M Andri, 24-200_Anas, 24-160_Surya. Semua hak cipta dilindungi. Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk Anda.</p>
+            <p>&copy; 24-181_Rizki, 24-095_Yohannes, 24-139_M Andri, 24-200_Anas, 24-160_Surya. Semua hak cipta dilindungi.</p>
         </div>
     </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Smooth scroll untuk link (diaktifkan kembali)
-    // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    //     anchor.addEventListener('click', function (e) {
-    //         const href = this.getAttribute('href');
-    //         if (href !== '#login' && href !== '#buat-transaksi') {
-    //             e.preventDefault();
-    //             const element = document.querySelector(href);
-    //             if (element) {
-    //                 element.scrollIntoView({
-    //                     behavior: 'smooth'
-    //                 });
-    //             }
-    //         }
-    //     });
-    // });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#login' && href !== '#buat-transaksi') {
+                e.preventDefault();
+                const element = document.querySelector(href);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
 </script>
 </body>
 
