@@ -19,6 +19,7 @@ class AdminModels
                 p.berat,
                 p.harga,
                 p.status,
+                p.verifed,
 
                 u.id AS id_user,
                 u.nama AS nama_user,
@@ -29,11 +30,13 @@ class AdminModels
                 c.id AS id_cucian,
                 c.nama AS nama_cucian,
                 c.harga AS harga_perkg,
-                c.estimate
+                c.estimate,
+                t.status AS status_bayar
 
                 FROM pesanan p
                 JOIN user u ON p.id_user = u.id
                 JOIN cucian c ON p.id_cucian = c.id
+                JOIN transaksi t ON p.id = t.id_pesanan
                 $SELECT";
 
         $result = $this->db->query($SQL);
@@ -47,12 +50,16 @@ class AdminModels
             $hargaData = $this->getPesanan($id);
             $harga = intval($hargaData[0]["harga_perkg"]) * floatval($berat);
 
-            $SQL = "UPDATE pesanan SET berat=?, harga=? WHERE id=?";
+            $SQL = "UPDATE pesanan SET berat=?, harga=?, verifed=1 WHERE id=?";
             $stmt = $this->db->prepare($SQL);
             $stmt->bind_param("ddi", $berat, $harga, $id);
             $stmt->execute();
+            $id_user = $hargaData[0]['id_user'];
+            $id_admin = $_SESSION['userdata']['id'];
+            $SQL_TRANSAKSI = "INSERT INTO transaksi (berat, harga, id_user, id_pesanan, id_admin, status) VALUES ('$berat', '$harga' , '$id_user', $id, '$id_admin','belum_dibayar')";
+            $this->db->query($SQL_TRANSAKSI);
         } catch (Exception $e) {
-            die($e->getMessage());
+            die($e);
         }
     }
 
@@ -65,6 +72,9 @@ class AdminModels
             $stmt = $this->db->prepare($SQL);
             $stmt->bind_param("si", $status_order, $id);
             $stmt->execute();
+            $status = ($status_bayar == '1') ? "belum_dibayar" : "dibayar";
+            $SQL_TRANSAKSI = "UPDATE transaksi SET status='$status' WHERE id_pesanan='$id'";
+            $this->db->query($SQL_TRANSAKSI);
         } catch (Exception $e) {
             die($e->getMessage());
         }

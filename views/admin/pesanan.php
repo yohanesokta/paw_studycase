@@ -108,16 +108,17 @@ require 'views/admin/components/header.php';
                 </thead>
                 <tbody>
                     <?php if (!empty($data) && count($data) > 0): ?>
-                        <?php $no = 1; ?>
+                        <?php $no = 1; 
+                        ?>
                         <?php foreach ($data as $value): ?>
 
                         <?php 
                             $berat = array_key_exists('berat', $value) ? $value['berat'] : null;
                             $harga = array_key_exists('harga', $value) ? $value['harga'] : 0;
                             $statusOrder = array_key_exists('status', $value) ? $value['status'] : 'pending';
-                            $statusBayar = array_key_exists('status_bayar', $value) ? (int)$value['status_bayar'] : 1;
-
-                            $sudahVerif = !is_null($berat) && $berat !== '';
+                            $statusBayar = $value['status_bayar'];
+                            
+                            $sudahVerif = $value['verifed'] == '1';
 
                             $nama_user = htmlspecialchars($value['nama_user'] ?? '-');
                             $no_telepon = htmlspecialchars($value['no_telepon'] ?? '-');
@@ -167,7 +168,7 @@ require 'views/admin/components/header.php';
                                 <?php else: ?>
                                     <form action="<?= URL("/admin/pesanan") ?>" method="POST" class="weight-form">
                                         <input type="hidden" name="id_pesanan" value="<?= htmlspecialchars($value['id_pesanan'] ?? '') ?>">
-                                        <input type="number" name="berat" step="0.1" min="0" class="form-control weight-input" placeholder="0.0" required>
+                                        <input type="number" name="berat" step="0.1" min="0" class="form-control weight-input" placeholder="0.0" required value="<?= $berat ?>">
                                         <button type="submit" class="btn btn-verify">
                                             <i class="bi bi-check-lg"></i>
                                         </button>
@@ -215,9 +216,9 @@ require 'views/admin/components/header.php';
                                         Rp <?= number_format((float)$harga, 0, ',', '.') ?>
                                     </div>
                                     <div>
-                                        <span class="payment-status <?= $statusBayar === 2 ? 'payment-paid' : 'payment-unpaid' ?>">
-                                            <i class="bi bi-<?= $statusBayar === 2 ? 'check-circle-fill' : 'x-circle-fill' ?> me-1"></i>
-                                            <?= $statusBayar === 2 ? 'Lunas' : 'Belum Bayar' ?>
+                                        <span class="payment-status <?= $statusBayar === 'dibayar' ? 'payment-paid' : 'payment-unpaid' ?>">
+                                            <i class="bi bi-<?= $statusBayar === 'dibayar'? 'check-circle-fill' : 'x-circle-fill' ?> me-1"></i>
+                                            <?= implode(" ", explode('_',$statusBayar)); ?>
                                         </span>
                                     </div>
                                 <?php else: ?>
