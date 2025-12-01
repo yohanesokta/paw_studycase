@@ -30,6 +30,8 @@ $Route->GET("/admin/harga","adminController@harga","admin");
 $Route->GET("/admin/pelanggan","adminController@pelanggan", "admin");
 $Route->GET("/admin/laporan","adminController@laporan", "admin");
 
+$Route->GET("/admin/masterharga","adminController@masterharga", "admin");
+
 $Route->GET("/user/dashboard", "userController@index", "pelanggan");
 $Route->POST("/user/pesanan", "userController@pesanan", "pelanggan");
 $Route->GET('/user/update-profile', 'userController@updateProfile', 'pelanggan');
