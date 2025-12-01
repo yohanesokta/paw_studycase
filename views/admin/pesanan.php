@@ -232,7 +232,7 @@ require 'views/admin/components/header.php';
                                     <button class="btn btn-action" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#modalUpdateStatus" 
-                                            onclick="setModalData(<?= (int)$value['id_pesanan'] ?>, '<?= htmlspecialchars($statusOrder) ?>', <?= (int)$statusBayar ?>)"
+                                            onclick="setModalData(<?= (int)$value['id_pesanan'] ?>, '<?= htmlspecialchars($statusOrder) ?>', <?= ( $statusBayar  == 'belum_dibayar') ? 1 : 2 ?>)"
                                             title="Update Status">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
