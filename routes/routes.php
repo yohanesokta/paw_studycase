@@ -37,6 +37,9 @@ $Route->GET('/admin/laporan/export', 'adminController@exportExcel', "admin");
 $Route->GET("/admin/harga","adminController@harga", "admin");
 
 $Route->GET("/admin/masterharga","adminController@masterharga", "admin");
+$Route->GET("/admin/masterharga/tambah","adminController@addcucian", "admin");
+
+$Route->POST("/admin/masterharga/tambah/process","adminController@addcucianProcess", "admin");
 
 $Route->GET("/user/dashboard", "userController@index", "pelanggan");
 $Route->POST("/user/pesanan", "userController@pesanan", "pelanggan");
