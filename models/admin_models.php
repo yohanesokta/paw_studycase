@@ -199,8 +199,8 @@ class AdminModels
         $sql = "SELECT 
         DATE_FORMAT(tanggal, '%M') AS bulan, COUNT(id_user) AS total 
         FROM transaksi WHERE YEAR(tanggal) = '$tahun' 
-        GROUP BY tanggal 
-        ORDER BY tanggal ASC";
+        GROUP BY MONTH(tanggal) 
+        ORDER BY MONTH(tanggal) ASC";
 
         $result = $this->db->query($sql);
 
