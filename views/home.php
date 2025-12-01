@@ -236,37 +236,63 @@ include 'header.php';
         </div>
     </section>
 
-    <!-- SECTION PENJADWALAN -->
-    <section class="pickup-section">
-        <div class="pickup-bg"></div>
+  <!-- SECTION PENJADWALAN -->
+<section class="pickup-section">
+    <div class="pickup-bg"></div>
 
-        <div class="pickup-container">
-            <div class="pickup-left">
-                <h2>
-                    Jadwalkan Penjemputan atau Pengantaran,<br>
-                    Nikmati Layanan Laundry Tanpa Repot!
-                </h2>
+    <div class="pickup-container">
+        <div class="pickup-left">
+            <h2>
+                Jadwalkan Penjemputan atau Pengantaran,<br>
+                Nikmati Layanan Laundry Tanpa Repot!
+            </h2>
 
-                <form class="pickup-form">
-                    <div class="pickup-grid">
-                        <input type="text" placeholder="Nama" required>
-                        <input type="text" placeholder="No Whatsapp" required>
-                        <input type="date" placeholder="Tanggal" required>
-                        <input type="time" placeholder="Jam Pengambilan" required>
-                    </div>
+            <form class="pickup-form" onsubmit="sendWA(event)">
+                <div class="pickup-grid">
+                    <input type="text" id="nama" placeholder="Nama" required>
+                    <input type="text" id="nowa" placeholder="No Whatsapp" required>
+                    <input type="text" id="alamat" placeholder="Alamat Lengkap" required>
+                    <input type="date" id="tanggal" required>
+                    <input type="time" id="jam" required>
+                </div>
 
-                    <button class="pickup-btn">
-                        <i class="fas fa-calendar-check"></i>
-                        Jadwalkan
-                    </button>
-                </form>
-            </div>
-
-            <div class="pickup-right">
-                <img src="./public/service1.png" alt="Pickup Laundry">
-            </div>
+                <button type="submit" class="pickup-btn">
+                    <i class="fas fa-calendar-check"></i> Jadwalkan
+                </button>
+            </form>
         </div>
-    </section>
+        <div class="pickup-right">
+            <img src="./public/service1.png" alt="Pickup Laundry">
+        </div>
+    </div>
+
+    <script>
+    function sendWA(e) {
+        e.preventDefault();
+
+        const nama = document.getElementById('nama').value;
+        const nowa = document.getElementById('nowa').value;
+        const alamat = document.getElementById('alamat').value;
+        const tanggal = document.getElementById('tanggal').value;
+        const jam = document.getElementById('jam').value;
+
+        const admin = "6285708350575"; // nomor admin WA
+
+        const pesan = `Halo Admin, saya ingin menjadwalkan penjemputan laundry:
+
+        Nama: ${nama}
+        No Whatsapp: ${nowa}
+        Alamat: ${alamat}
+        Tanggal Penjemputan: ${tanggal}
+        Jam Penjemputan: ${jam}
+        Mohon konfirmasinya ya Kak `;
+
+        const url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(pesan);
+
+        window.open(url, "_blank");
+    }
+    </script>
+</section>
 
 
     <section class="testimonial-section" id="testimoni">
