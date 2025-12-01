@@ -3,6 +3,8 @@
 include 'header.php';
 ?>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <section class="hero" id="beranda">
         <div class="container">
             <div class="hero-container">
@@ -177,123 +179,167 @@ include 'header.php';
         </div>
     </section>
 
-    <section class="pricing-section" id="harga">
-        <div class="container">
-            <h2 class="section-title">Harga Layanan</h2>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="pricing-card">
-                        <h5>Cuci Reguler</h5>
-                        <div class="price">Rp 5.000<span>/kg</span></div>
-                        <ul class="pricing-features">
-                            <li>Waktu 3-5 hari</li>
-                            <li>Detergent standar</li>
-                            <li>Gratis softener</li>
-                        </ul>
-                        <a href="<?= URL('/google') ?>" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
-                    </div>
-                </div>
+<section class="pricing-section" id="harga">
+    <div class="container">
+        <h2 class="section-title text-center mb-4">Harga Layanan</h2>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="pricing-card">
-                        <h5>Cuci Express</h5>
-                        <div class="price">Rp 8.000<span>/kg</span></div>
-                        <ul class="pricing-features">
-                            <li>Waktu 24 jam</li>
-                            <li>Detergent premium</li>
-                            <li>Parfum pilihan</li>
-                        </ul>
-                        <a href="#login" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="pricing-card">
-                        <h5>Cuci Premium</h5>
-                        <div class="price">Rp 12.000<span>/kg</span></div>
-                        <ul class="pricing-features">
-                            <li>Waktu 1 hari</li>
-                            <li>Detergent imported</li>
-                            <li>Pelayanan VIP</li>
-                        </ul>
-                        <a href="#login" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="pricing-card">
-                        <h5>Paket Bulanan</h5>
-                        <div class="price">Rp 150.000<span>/bulan</span></div>
-                        <ul class="pricing-features">
-                            <li>Unlimited 50kg</li>
-                            <li>Gratis antar jemput</li>
-                            <li>Diskon 20%</li>
-                        </ul>
-                        <a href="#login" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-                    </div>
-                </div>
+        <div id="pricingCarousel" class="carousel slide" data-bs-ride="carousel">
+            
+            <!-- INDICATORS -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#pricingCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#pricingCarousel" data-bs-slide-to="1"></button>
             </div>
-        </div>
-    </section>
 
-  <!-- SECTION PENJADWALAN -->
+            <!-- SLIDER ITEMS -->
+            <div class="carousel-inner">
+
+                <!-- SLIDE 1 -->
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h5>Cuci Basah</h5>
+                                <div class="price">Rp 3.000<span>/kg</span></div>
+                                <ul class="pricing-features">
+                                    <li>Waktu 1-2 hari</li>
+                                    <li>Detergent standar</li>
+                                    <li>Gratis pewangi</li>
+                                </ul>
+                                <a href="<?= URL('/google') ?>" class="btn btn-outline-primary btn-sm">Pesan Sekarang</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h5>Cuci Kering</h5>
+                                <div class="price">Rp 4.000<span>/kg</span></div>
+                                <ul class="pricing-features">
+                                    <li>Waktu 1-2 hari</li>
+                                    <li>Detergent premium</li>
+                                    <li>Gratis softener & pewangi</li>
+                                </ul>
+                                <a href="<?= URL('/google') ?>" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h5>Cuci Kering Setrika</h5>
+                                <div class="price">Rp 5.000<span>/kg</span></div>
+                                <ul class="pricing-features">
+                                    <li>Waktu 1-3 hari</li>
+                                    <li>Detergent imported</li>
+                                    <li>Setrika rapi</li>
+                                </ul>
+                                <a href="<?= URL('/google') ?>" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SLIDE 2 -->
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h5>Cuci Express (Kering)</h5>
+                                <div class="price">Rp 10.000<span>/kg</span></div>
+                                <ul class="pricing-features">
+                                    <li>Waktu 24 Jam</li>
+                                    <li>Gratis antar jemput</li>
+                                    <li>Prioritas layanan</li>
+                                </ul>
+                                <a href="<?= URL('/google') ?>" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="pricing-card">
+                                <h5>Cuci Express (Kering Setrika)</h5>
+                                <div class="price">Rp 12.000<span>/kg</span></div>
+                                <ul class="pricing-features">
+                                    <li>Waktu 24 Jam</li>
+                                    <li>Gratis antar jemput</li>
+                                    <li>Prioritas layanan</li>
+                                </ul>
+                                <a href="<?= URL('/google') ?>" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CONTROLS -->
+            <button class="carousel-control-prev" type="button" data-bs-slide="prev" data-bs-target="#pricingCarousel">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-slide="next" data-bs-target="#pricingCarousel">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- SECTION ANTAR JEMPUT -->
 <section class="pickup-section">
     <div class="pickup-bg"></div>
 
     <div class="pickup-container">
         <div class="pickup-left">
-            <h2>
-                Jadwalkan Penjemputan atau Pengantaran,<br>
-                Nikmati Layanan Laundry Tanpa Repot!
-            </h2>
-
-            <form class="pickup-form" onsubmit="sendWA(event)">
-                <div class="pickup-grid">
-                    <input type="text" id="nama" placeholder="Nama" required>
-                    <input type="text" id="nowa" placeholder="No Whatsapp" required>
-                    <input type="text" id="alamat" placeholder="Alamat Lengkap" required>
-                    <input type="date" id="tanggal" required>
-                    <input type="time" id="jam" required>
+            <div class="pickup-badge">
+                <i class="fas fa-bolt"></i>
+                <span>Layanan Cepat</span>
+            </div>
+            <h2>Antar Jemput - Maksimal 30 Menit Dipickup</h2>
+            <p class="pickup-description">
+                Kami memahami bahwa kenyamanan Anda adalah prioritas kami. Oleh karena itu, kami menyediakan layanan antar-jemput gratis dengan waktu penjemputan maksimal 30 menit setelah Anda melakukan pemesanan. Cukup hubungi kami atau pesan melalui aplikasi, dan kami akan segera datang untuk mengambil cucian Anda.
+            </p>
+            
+            <div class="pickup-features">
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Maksimal 30 Menit</span>
                 </div>
+                <div class="feature-item">
+                    <i class="fas fa-gift"></i>
+                    <span>Gratis Antar Jemput</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Tracking Real-Time</span>
+                </div>
+            </div>
 
-                <button type="submit" class="pickup-btn">
-                    <i class="fas fa-calendar-check"></i> Jadwalkan
-                </button>
-            </form>
+            <a href="<?= URL('/google') ?>" class="pickup-cta-btn">
+                <i class="fas fa-phone-alt"></i> Hubungi Sekarang
+            </a>
         </div>
+        
         <div class="pickup-right">
-            <img src="./public/service1.png" alt="Pickup Laundry">
+            <div class="delivery-animation">
+                <div class="map-background">
+                    <div class="map-marker marker-1"></div>
+                    <div class="map-marker marker-2"></div>
+                    <div class="map-route"></div>
+                </div>
+                <div class="delivery-bike">
+                    <i class="fas fa-motorcycle"></i>
+                    <div class="package-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script>
-    function sendWA(e) {
-        e.preventDefault();
-
-        const nama = document.getElementById('nama').value;
-        const nowa = document.getElementById('nowa').value;
-        const alamat = document.getElementById('alamat').value;
-        const tanggal = document.getElementById('tanggal').value;
-        const jam = document.getElementById('jam').value;
-
-        const admin = "6285708350575"; // nomor admin WA
-
-        const pesan = `Halo Admin, saya ingin menjadwalkan penjemputan laundry:
-
-        Nama: ${nama}
-        No Whatsapp: ${nowa}
-        Alamat: ${alamat}
-        Tanggal Penjemputan: ${tanggal}
-        Jam Penjemputan: ${jam}
-        Mohon konfirmasinya ya Kak `;
-
-        const url = "https://wa.me/6285708350575" + admin + "?text=" + encodeURIComponent(pesan);
-
-        window.open(url, "_blank");
-    }
-    </script>
 </section>
-
 
     <section class="testimonial-section" id="testimoni">
     <div class="container">
@@ -317,7 +363,7 @@ include 'header.php';
 
             <div class="testimonial-card marquee-item">
                 <img src="./public/blank-profile.webp" class="testimonial-photo">
-                <h5>24-139_M Andri</h5>
+                <h5>24-139_M Andri Firmansyah</h5>
                 <p>"Antar jemputnya cepat, stafnya ramah semua!"</p>
             </div>
 
@@ -368,7 +414,7 @@ include 'header.php';
                 <a href="tel:+628123456789" class="btn btn-light btn-lg me-2 mb-2">
                     <i class="fas fa-phone"></i> Hubungi Kami
                 </a>
-                <a href="#login" class="btn btn-outline-light btn-lg mb-2">
+                <a href="<?= URL('/google') ?>" class="btn btn-outline-light btn-lg mb-2">
                     <i class="fas fa-user"></i> Login Akun
                 </a>
             </div>
@@ -580,6 +626,8 @@ include 'header.php';
             this.style.transform = 'translateY(0) scale(1)';
         });
     });
+
+
 </script>
 
 <?php
