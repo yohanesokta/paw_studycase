@@ -261,8 +261,6 @@ include 'header.php';
                 </button>
             </form>
         </div>
-
-        <!-- GAMBAR TETAP ADA -->
         <div class="pickup-right">
             <img src="./public/service1.png" alt="Pickup Laundry">
         </div>
