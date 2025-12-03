@@ -46,7 +46,6 @@ class AdminModels
     public function updateBerat($id, $berat)
     {
         try {
-            // Ambil harga per kilogram
             $hargaData = $this->getPesanan($id);
             $harga = intval($hargaData[0]["harga_perkg"]) * floatval($berat);
 
