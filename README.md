@@ -1,5 +1,5 @@
 # FRESH LOANDRY
-> Laundry Online yang bertujuan untuk mempermudah proses pemesanan, pelacakan status, hingga pencatatan transaksi secara digital. Dengan diterapkannya sistem ini, kami berharap layanan laundry dapat menjadi lebih cepat, teratur, transparan, dan nyaman digunakan oleh semua pihak.
+> Laundry Onlinee yang bertujuan untuk mempermudah proses pemesanan, pelacakan status, hingga pencatatan transaksi secara digital. Dengan diterapkannya sistem ini, kami berharap layanan laundry dapat menjadi lebih cepat, teratur, transparan, dan nyaman digunakan oleh semua pihak.
 
 ### TEAMS & CONTRIBUTOR
 - [Yohanes Oktanio](https://github.com/yohanesokta) | 240411100095
